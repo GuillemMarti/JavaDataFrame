@@ -25,7 +25,7 @@ public class JSONReaderTest {
         list.add(map);
         System.out.println("Testing JSONReader...");
         JSONReader jsonReader = new JSONReader();
-        Assertions.assertEquals(jsonReader.JsonToGson(".\\src\\citiesTest.json"), list);
+        Assertions.assertEquals(list,jsonReader.JsonToGson(".\\src\\citiesTest.json"));
     }
 
 }
