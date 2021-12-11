@@ -8,65 +8,30 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CSVReader {
+public class CSVReader implements AbstractReader {
 
-    public List<Map<String, Object>> csvToObject(String filenamePath) throws IOException {
+    /**
+     * Method for reading from CSV files and converting them into an object
+     *
+     * @param filenamePath The path of the file to read
+     * @return Returns a list with maps of the information from the file
+     * @throws IOException Exception thrown if there is a problem when reading from the file
+     */
+    @Override
+    public List<Map<String, Object>> createReader(String filenamePath) throws IOException {
         BufferedReader csvReader = new BufferedReader(new FileReader(filenamePath));
-        csvReader.readLine();
+        String[] titles = csvReader.readLine().split(",");
         String row;
         List<Map<String, Object>> list = new ArrayList<>();
         while ((row = csvReader.readLine()) != null) {
             Map<String, Object> map = new LinkedHashMap<>();
             String[] data = row.split(",");
             for (int i = 0; i < data.length; i++) {
-                map.put(keyColumn(i), data[i].replaceAll("\"", ""));
+                map.put(titles[i].replaceAll("\"", "").replaceAll(" ", ""), data[i].replaceAll("\"", ""));
             }
             list.add(map);
         }
         return list;
-    }
-
-    /*private String keyColumn (int index){
-        return switch (index) {
-            case 0 -> "LatD";
-            case 1 -> "LatM";
-            case 2 -> "LatS";
-            case 3 -> "NS";
-            case 4 -> "LonD";
-            case 5 -> "LonM";
-            case 6 -> "LonS";
-            case 7 -> "EW";
-            case 8 -> "City";
-            case 9 -> "State";
-            default -> null;
-        };
-    }*/
-
-    private String keyColumn (int index){
-        switch (index) {
-            case 0:
-                return "LatD";
-            case 1:
-                return "LatM";
-            case 2:
-                return "LatS";
-            case 3:
-                return "NS";
-            case 4:
-                return "LonD";
-            case 5:
-                return "LonM";
-            case 6:
-                return "LonS";
-            case 7:
-                return "EW";
-            case 8:
-                return "City";
-            case 9:
-                return "State";
-            default:
-                return null;
-        }
     }
 
 }
