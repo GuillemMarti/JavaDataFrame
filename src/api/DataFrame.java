@@ -25,9 +25,23 @@ public class DataFrame {
         this.list = list;
     }
 
-    public String at (int item, String label) {
-        Map<String, Object> map = new LinkedHashMap<>();
-        map = list.get(item);
-        return (map.get(label).toString());
+    public String at (int row, String label) {
+        Map<String, Object> map = list.get(row);
+        return (map.get(label).toString().trim());
+    }
+
+    public String iat(int row, int column) {
+        Map<String, Object> map = list.get(row);
+        String key = map.keySet().toArray()[column].toString();
+        return (map.get(key).toString().trim());
+    }
+
+    public int columns() {
+        Map<String, Object> map = list.get(0);
+        return map.size();
+    }
+
+    public int size() {
+        return list.size()-1;
     }
 }
