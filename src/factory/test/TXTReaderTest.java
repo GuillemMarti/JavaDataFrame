@@ -1,5 +1,8 @@
-package DataFrameFactory;
+package factory.test;
 
+import factory.AbstractFactory;
+import factory.AbstractReader;
+import factory.TXTFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -13,6 +16,7 @@ public class TXTReaderTest {
 
     @Test
     public void testTXTReader() throws IOException {
+        AbstractFactory factory = new TXTFactory();
         Map<String, Object> map = new LinkedHashMap<>();
         map.put("LatD",41);
         map.put("LatM",5);
@@ -27,8 +31,8 @@ public class TXTReaderTest {
         List<Map<String,Object>> list = new ArrayList<>();
         list.add(map);
         System.out.println("Testing TXTReader...");
-        TXTReader txtReader = new TXTReader();
-        Assertions.assertEquals(list,txtReader.txtToObject(".\\src\\citiesTest.txt"));
+        AbstractReader txtReader = factory.createReader();
+        Assertions.assertEquals(list,txtReader.createReader(".\\src\\citiesTest.txt"));
     }
 
 }

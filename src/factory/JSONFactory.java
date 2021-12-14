@@ -1,4 +1,4 @@
-package DataFrameFactory;
+package factory;
 
 public class JSONFactory implements AbstractFactory {
 

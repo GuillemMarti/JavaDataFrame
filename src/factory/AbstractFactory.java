@@ -1,4 +1,4 @@
-package DataFrameFactory;
+package factory;
 
 public interface AbstractFactory {
 

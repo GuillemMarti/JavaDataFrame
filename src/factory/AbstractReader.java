@@ -1,4 +1,4 @@
-package DataFrameFactory;
+package factory;
 
 import java.io.IOException;
 import java.util.List;

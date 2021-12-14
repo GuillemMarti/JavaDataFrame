@@ -1,5 +1,8 @@
-package DataFrameFactory;
+package factory.test;
 
+import factory.AbstractFactory;
+import factory.AbstractReader;
+import factory.CSVFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -13,6 +16,7 @@ public class CSVReaderTest {
 
     @Test
     public void testCSVReader() throws IOException {
+        AbstractFactory factory = new CSVFactory();
         Map<String, Object> map = new LinkedHashMap<>();
         map.put("LatD", "   "+41);
         map.put("LatM", "    "+5);
@@ -27,8 +31,8 @@ public class CSVReaderTest {
         List<Map<String,Object>> list = new ArrayList<>();
         list.add(map);
         System.out.println("Testing CSVReader...");
-        CSVReader csvReader = new CSVReader();
-        Assertions.assertEquals(list,csvReader.csvToObject(".\\src\\citiesTest.csv"));
+        AbstractReader csvReader = factory.createReader();
+        Assertions.assertEquals(list,csvReader.createReader(".\\src\\citiesTest.csv"));
     }
 
 }
