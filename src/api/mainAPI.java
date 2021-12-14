@@ -3,6 +3,7 @@ package api;
 import factory.*;
 
 import java.io.IOException;
+import java.util.Comparator;
 
 public class mainAPI {
 
@@ -14,5 +15,6 @@ public class mainAPI {
         System.out.println(df.iat(0,0));
         System.out.println(df.columns());
         System.out.println(df.size());
+        System.out.println(df.sort("LatD"));
     }
 }

@@ -1,9 +1,7 @@
 package api;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class DataFrame {
 
@@ -43,5 +41,29 @@ public class DataFrame {
 
     public int size() {
         return list.size()-1;
+    }
+
+    /**
+     * Hacer factory con List<String> y List<Integer> y aplicar el comparator que toca
+     */
+    public List<String> sort(String label) {
+        List<String> list1 = new ArrayList<>();
+        for (var map : list ){
+            list1.add(map.get(label).toString().trim());
+        }
+
+        return list1;
+    }
+}
+
+class AlphabeticComparator implements Comparator<String> {
+    public int compare(String a, String b){
+        return(a.compareTo(b));
+    }
+}
+
+class IntegerComparator implements Comparator<Integer> {
+    public int compare(Integer a, Integer b) {
+        return Integer.compare(b, a);
     }
 }
