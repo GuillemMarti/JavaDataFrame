@@ -22,10 +22,12 @@ public class JSONReader implements AbstractReader {
     public List<Map<String, Object>> createReader(String filenamePath) throws IOException {
         Gson gson = new Gson();
         JsonReader reader = new JsonReader(new FileReader(filenamePath));
-        reader.beginArray();
-        Map<String, Object> map = gson.fromJson(reader, Map.class);
         List<Map<String, Object>> list = new ArrayList<>();
-        list.add(map);
+        reader.beginArray();
+        while (reader.hasNext()){
+            Map<String, Object> map = gson.fromJson(reader, Map.class);
+            list.add(map);
+        }
         reader.close();
         return list;
     }

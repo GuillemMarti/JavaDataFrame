@@ -18,13 +18,13 @@ public class TXTReaderTest {
     public void testTXTReader() throws IOException {
         AbstractFactory factory = new TXTFactory();
         Map<String, Object> map = new LinkedHashMap<>();
-        map.put("LatD",41);
-        map.put("LatM",5);
-        map.put("LatS",59);
+        map.put("LatD",41.0);
+        map.put("LatM",5.0);
+        map.put("LatS",59.0);
         map.put("NS","N");
-        map.put("LonD",80);
-        map.put("LonM",39);
-        map.put("LonS",0);
+        map.put("LonD",80.0);
+        map.put("LonM",39.0);
+        map.put("LonS",0.0);
         map.put("EW","W");
         map.put("City","Youngstown");
         map.put("State","OH");

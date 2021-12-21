@@ -1,17 +1,26 @@
 package api;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class DataFrame {
 
     List<Map<String, Object>> list;
 
+    /**
+     * DataFrame empty constructor
+     */
     public DataFrame() {
         this.list = new ArrayList<>();
     }
 
-    public DataFrame(List<Map<String, Object>> list){
+    /**
+     * Dataframe constructor
+     *
+     * @param list List of maps containing the data information
+     */
+    public DataFrame(List<Map<String, Object>> list) {
         this.list = list;
     }
 
@@ -19,28 +28,44 @@ public class DataFrame {
         return list;
     }
 
-    public void setList(List<Map<String, Object>> list) {
-        this.list = list;
-    }
-
-    public String at (int row, String label) {
+    /**
+     * Returns the value of a single item and column label
+     *
+     * @param row   The item from the list
+     * @param label The element we want the value
+     * @return The value of the element
+     */
+    public String at(int row, String label) {
         Map<String, Object> map = list.get(row);
         return (map.get(label).toString().trim());
     }
 
+    /**
+     * Access a single value for a row and column by integer position
+     *
+     * @param row    The index from the list to acces
+     * @param column The number of column to access
+     * @return The value of the element
+     */
     public String iat(int row, int column) {
         Map<String, Object> map = list.get(row);
         String key = map.keySet().toArray()[column].toString();
         return (map.get(key).toString().trim());
     }
 
+    /**
+     * @return The number of labels in the list
+     */
     public int columns() {
         Map<String, Object> map = list.get(0);
         return map.size();
     }
 
+    /**
+     * @return The number of items in the list
+     */
     public int size() {
-        return list.size()-1;
+        return list.size();
     }
 
     /**
@@ -48,22 +73,81 @@ public class DataFrame {
      */
     public List<String> sort(String label) {
         List<String> list1 = new ArrayList<>();
-        for (var map : list ){
+        for (var map : list) {
             list1.add(map.get(label).toString().trim());
         }
 
         return list1;
     }
+
+    /**
+     * This function checks for all the items that have the same value (double) in the corresponding
+     * label passed by parameter
+     *
+     * @param key   The label we want to check
+     * @param value The value the condition has to fulfill
+     * @return Returns a list with the items that contain the same value in the corresponding label
+     */
+    public List<Map<String, Object>> equals(String key, double value) {
+        List<Map<String, Object>> list1 = new ArrayList<>();
+        for (var map : list) {
+            if (map.get(key).equals(value))
+                list1.add(map);
+        }
+        return list1;
+    }
+
+    /**
+     * This function checks for all the items that have the same value (string) in the corresponding
+     * label passed by parameter
+     *
+     * @param key   The label we want to check
+     * @param value The value the condition has to fulfill
+     * @return Returns a list with the items that contain the same value in the corresponding label
+     */
+    public List<Map<String, Object>> equals(String key, String value) {
+        List<Map<String, Object>> list1 = new ArrayList<>();
+        for (var map : list) {
+            if (map.get(key).equals(value))
+                list1.add(map);
+        }
+        return list1;
+    }
+
+    /**
+     * This function checks for all the items that have a greater value in the corresponding
+     * label passed by parameter
+     *
+     * @param key   The label we want to check
+     * @param value The value the condition has to fulfill
+     * @return Returns a list with the items that contain a greater value in the corresponding label
+     */
+    public List<Map<String, Object>> greater(String key, double value) {
+        List<Map<String, Object>> list1 = new ArrayList<>();
+        for (var map : list) {
+            if ((Double) map.get(key) > value)
+                list1.add(map);
+        }
+        return list1;
+    }
+
+    /**
+     * This function checks for all the items that have a greater value in the corresponding
+     * label passed by parameter
+     *
+     * @param key   The label we want to check
+     * @param value The value the condition has to fulfill
+     * @return Returns a list with the items that contain a lower value in the corresponding label
+     */
+    public List<Map<String, Object>> lower(String key, double value) {
+        List<Map<String, Object>> list1 = new ArrayList<>();
+        for (var map : list) {
+            if ((Double) map.get(key) < value)
+                list1.add(map);
+        }
+        return list1;
+    }
+
+
 }
 
-class AlphabeticComparator implements Comparator<String> {
-    public int compare(String a, String b){
-        return(a.compareTo(b));
-    }
-}
-
-class IntegerComparator implements Comparator<Integer> {
-    public int compare(Integer a, Integer b) {
-        return Integer.compare(b, a);
-    }
-}

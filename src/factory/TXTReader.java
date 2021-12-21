@@ -27,7 +27,13 @@ public class TXTReader implements AbstractReader {
             Map<String, Object> map = new LinkedHashMap<>();
             String[] data = row.split(",");
             for (int i = 0; i < data.length; i++) {
-                map.put(titles[i], data[i]);
+                if (data[i].contains("\"")){
+                    map.put(titles[i].replaceAll("\"", ""), data[i].replaceAll("\"", "").trim());
+                }else if (i == 9){
+                    map.put(titles[i].replaceAll("\"", ""), data[i].replaceAll("\"", "").trim());
+                }else{
+                    map.put(titles[i].replaceAll("\"", ""), Double.parseDouble(data[i]));
+                }
             }
             list.add(map);
         }

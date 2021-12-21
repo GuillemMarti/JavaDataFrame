@@ -27,7 +27,13 @@ public class CSVReader implements AbstractReader {
             Map<String, Object> map = new LinkedHashMap<>();
             String[] data = row.split(",");
             for (int i = 0; i < data.length; i++) {
-                map.put(titles[i].replaceAll("\"", "").replaceAll(" ", ""), data[i].replaceAll("\"", ""));
+                if (data[i].contains("\"")){
+                    map.put(titles[i].replaceAll("\"", "").trim(), data[i].replaceAll("\"", "").trim());
+                }else if (i == 9){
+                    map.put(titles[i].replaceAll("\"", "").trim(), data[i].replaceAll("\"", "").trim());
+                }else{
+                    map.put(titles[i].replaceAll("\"", "").trim(), Double.parseDouble(data[i]));
+                }
             }
             list.add(map);
         }
