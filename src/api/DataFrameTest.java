@@ -16,6 +16,7 @@ public class DataFrameTest {
         DataFrame df = new DataFrame(csvReader.createReader(".\\src\\cities.csv"));
         DataFrame df2 = new DataFrame(jsonReader.createReader(".\\src\\cities.json"));
         DataFrame df3 = new DataFrame(txtReader.createReader(".\\src\\cities.txt"));
+        String ascending = "ascending", descending = "descending";
 
         System.out.println("Testing API with CSV...");
 
@@ -23,7 +24,7 @@ public class DataFrameTest {
         System.out.println(df.iat(0,0));
         System.out.println(df.columns());
         System.out.println(df.size());
-        System.out.println(df.sort("LatS"));
+        System.out.println(df.sort("City", descending));
         System.out.println(df.equals("City", "Wilmington"));
         System.out.println(df.equals("LatD",49.0));
         System.out.println(df.greater("LatD",45.0));
@@ -35,7 +36,7 @@ public class DataFrameTest {
         System.out.println(df2.iat(0,0));
         System.out.println(df2.columns());
         System.out.println(df2.size());
-        System.out.println(df2.sort("LatD"));
+        System.out.println(df2.sort("LatD", descending));
         System.out.println(df2.equals("City", "Wilmington"));
         System.out.println(df2.equals("LatD",50.0));
         System.out.println(df2.greater("LatD",49.0));
@@ -47,7 +48,7 @@ public class DataFrameTest {
         System.out.println(df3.iat(0,0));
         System.out.println(df3.columns());
         System.out.println(df3.size());
-        System.out.println(df3.sort("LatD"));
+        System.out.println(df3.sort("LatD", ascending));
         System.out.println(df3.equals("City", "Regina"));
         System.out.println(df3.equals("LatD",50.0));
         System.out.println(df3.greater("LatD",49.0));

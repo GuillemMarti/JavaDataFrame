@@ -1,8 +1,6 @@
 package api;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class DataFrame {
 
@@ -69,12 +67,19 @@ public class DataFrame {
     }
 
     /**
-     * Hacer factory con List<String> y List<Integer> y aplicar el comparator que toca
+     * Sort a list in ascending or descending order
+     * @param label         The label of the column what we want to sort
+     * @param comparator    The condition for sort the list
+     * @return  The list with the values of the label following a certain order
      */
-    public List<String> sort(String label) {
+    public List<String> sort(String label, String comparator) {
         List<String> list1 = new ArrayList<>();
         for (var map : list) {
             list1.add(map.get(label).toString().trim());
+        }
+        switch (comparator) {
+            case "ascending" -> list1.sort(Comparator.naturalOrder());
+            case "descending" -> list1.sort(Comparator.reverseOrder());
         }
 
         return list1;
