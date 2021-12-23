@@ -4,7 +4,7 @@ import factory.*;
 
 import java.io.IOException;
 
-public class DataFrameTest {
+public class DataFrameAPITest {
 
     public static void main(String[] args) throws IOException {
         AbstractFactory factoryCSV = new CSVFactory();
@@ -13,9 +13,9 @@ public class DataFrameTest {
         AbstractReader csvReader = factoryCSV.createReader();
         AbstractReader jsonReader = factoryJSON.createReader();
         AbstractReader txtReader = factoryTXT.createReader();
-        DataFrame df = new DataFrame(csvReader.createReader(".\\src\\cities.csv"));
-        DataFrame df2 = new DataFrame(jsonReader.createReader(".\\src\\cities.json"));
-        DataFrame df3 = new DataFrame(txtReader.createReader(".\\src\\cities.txt"));
+        DataFrameAPI df = new DataFrameAPI(csvReader.createReader(".\\src\\api\\APIFiles\\cities.csv"));
+        DataFrameAPI df2 = new DataFrameAPI(jsonReader.createReader(".\\src\\api\\APIFiles\\cities.json"));
+        DataFrameAPI df3 = new DataFrameAPI(txtReader.createReader(".\\src\\api\\APIFiles\\cities.txt"));
         String ascending = "ascending", descending = "descending";
 
         System.out.println("Testing API with CSV...");

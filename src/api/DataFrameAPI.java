@@ -1,15 +1,17 @@
 package api;
 
+import dataframe.DataFrame;
+
 import java.util.*;
 
-public class DataFrame {
+public class DataFrameAPI implements DataFrame {
 
     List<Map<String, Object>> list;
 
     /**
      * DataFrame empty constructor
      */
-    public DataFrame() {
+    public DataFrameAPI() {
         this.list = new ArrayList<>();
     }
 
@@ -18,7 +20,7 @@ public class DataFrame {
      *
      * @param list List of maps containing the data information
      */
-    public DataFrame(List<Map<String, Object>> list) {
+    public DataFrameAPI(List<Map<String, Object>> list) {
         this.list = list;
     }
 
