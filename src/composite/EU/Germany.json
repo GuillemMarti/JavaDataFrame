@@ -1,0 +1,49 @@
+[
+  {
+    "LatD": 53,
+    "LatM": 54,
+    "LatS": 13,
+    "NS": "N",
+    "LonD": 9,
+    "LonM": 99,
+    "LonS": 24,
+    "EW": "E",
+    "City": "Hamburg",
+    "State": "HA"
+  },
+  {
+    "LatD": 50,
+    "LatM": 92,
+    "LatS": 41,
+    "NS": "N",
+    "LonD": 6,
+    "LonM": 99,
+    "LonS": 90,
+    "EW": "E",
+    "City": "Colonia",
+    "State": "CO"
+  },
+  {
+    "LatD": 48,
+    "LatM": 14,
+    "LatS": 22,
+    "NS": "N",
+    "LonD": 11,
+    "LonM": 56,
+    "LonS": 34,
+    "EW": "E",
+    "City": "Munich",
+    "State": "MU"
+  },
+  {
+    "LatD": 52,
+    "LatM": 50,
+    "LatS": 19,
+    "NS": "N",
+    "LonD": 13,
+    "LonM": 41,
+    "LonS": 62,
+    "EW": "E",
+    "City": "Berlin",
+    "State": "BE"
+  }]

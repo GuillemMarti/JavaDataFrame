@@ -1,0 +1,5 @@
+"LatD","LatM","LatS","NS","LonD","LonM","LonS","EW","City","State"
+43,68,11,"N",79,38,39,"W","Toronto",OT
+45,39,94,"N",75,67,2,"W","Ottawa",OT
+45,51,71,"N",73,61,12,"W","Montreal",WA
+49,26,12,"N",123,9,27,"W","Vancouver",BC

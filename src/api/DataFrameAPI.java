@@ -43,7 +43,7 @@ public class DataFrameAPI implements DataFrame {
     /**
      * Access a single value for a row and column by integer position
      *
-     * @param row    The index from the list to acces
+     * @param row    The index from the list to access
      * @param column The number of column to access
      * @return The value of the element
      */

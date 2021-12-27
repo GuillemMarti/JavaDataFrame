@@ -1,0 +1,5 @@
+"LatD", "LatM", "LatS", "NS", "LonD", "LonM", "LonS", "EW", "City", "State"
+   41,   38,   41, "N",     2,   17,    34, "E", "Barcelona", CAT
+   41,   11,   57, "N",     1,   25,   3, "E", "Tarragona", CAT
+   41,   61,   54, "N",     0,   64,   84, "E", "Lleida", CAT
+   41,   97,   29, "N",     2,   81,    64, "E", "Girona", CAT
