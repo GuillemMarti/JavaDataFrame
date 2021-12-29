@@ -3,6 +3,8 @@ package api;
 import factory.*;
 
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.Map;
 
 public class DataFrameAPITest {
 
@@ -17,6 +19,7 @@ public class DataFrameAPITest {
         DataFrameAPI df2 = new DataFrameAPI(jsonReader.createReader(".\\src\\api\\APIFiles\\cities.json"));
         DataFrameAPI df3 = new DataFrameAPI(txtReader.createReader(".\\src\\api\\APIFiles\\cities.txt"));
         String ascending = "ascending", descending = "descending";
+        int i = 0;
 
         System.out.println("Testing API with CSV...");
 
@@ -30,6 +33,11 @@ public class DataFrameAPITest {
         System.out.println(df.greater("LatD",45.0));
         System.out.println(df.lower("LatD",45.0));
 
+        for (Map<String, Object> stringObjectMap : df) {
+            System.out.println(i + " - " + stringObjectMap);
+            i++;
+        }
+
         System.out.println("\n\nTesting API with JSON...");
 
         System.out.println(df2.at(0, "LatD"));
@@ -42,6 +50,13 @@ public class DataFrameAPITest {
         System.out.println(df2.greater("LatD",49.0));
         System.out.println(df2.lower("LatD",45.0));
 
+        Iterator<Map<String, Object>> it2 = df2.iterator();
+        i = 0;
+        while (it2.hasNext()){
+            System.out.println(i + " - " +it2.next());
+            i++;
+        }
+
         System.out.println("\n\nTesting API with TXT...");
 
         System.out.println(df3.at(0, "LatD"));
@@ -53,6 +68,13 @@ public class DataFrameAPITest {
         System.out.println(df3.equals("LatD",50.0));
         System.out.println(df3.greater("LatD",49.0));
         System.out.println(df3.lower("LatD",45.0));
+
+        Iterator<Map<String, Object>> it3 = df3.iterator();
+        i = 0;
+        while (it3.hasNext()){
+            System.out.println(i + " - " +it3.next());
+            i++;
+        }
 
     }
 }

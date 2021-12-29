@@ -4,7 +4,7 @@ import dataframe.DataFrame;
 
 import java.util.*;
 
-public class DataFrameAPI implements DataFrame {
+public class DataFrameAPI implements DataFrame, Iterable<Map<String, Object>>{
 
     List<Map<String, Object>> list;
 
@@ -79,13 +79,17 @@ public class DataFrameAPI implements DataFrame {
         for (var map : list) {
             list1.add(map.get(label).toString().trim());
         }
-        switch (comparator) {
+        switch (comparator.toLowerCase()) {
             case "ascending" -> list1.sort(Comparator.naturalOrder());
             case "descending" -> list1.sort(Comparator.reverseOrder());
         }
 
         return list1;
     }
+
+    /*public List<Map<String, Object>> query(String condition) {
+
+    }*/
 
     /**
      * This function checks for all the items that have the same value (double) in the corresponding
@@ -156,5 +160,9 @@ public class DataFrameAPI implements DataFrame {
     }
 
 
+    @Override
+    public Iterator<Map<String, Object>> iterator() {
+        return this.list.iterator();
+    }
 }
 
