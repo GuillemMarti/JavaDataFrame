@@ -3,8 +3,10 @@ package api;
 import dataframe.DataFrame;
 
 import java.util.*;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
-public class DataFrameAPI implements DataFrame, Iterable<Map<String, Object>>{
+public class DataFrameAPI implements DataFrame, Iterable<Map<String, Object>> {
 
     List<Map<String, Object>> list;
 
@@ -70,9 +72,10 @@ public class DataFrameAPI implements DataFrame, Iterable<Map<String, Object>>{
 
     /**
      * Sort a list in ascending or descending order
-     * @param label         The label of the column what we want to sort
-     * @param comparator    The condition for sort the list
-     * @return  The list with the values of the label following a certain order
+     *
+     * @param label      The label of the column what we want to sort
+     * @param comparator The condition for sort the list
+     * @return The list with the values of the label following a certain order
      */
     public List<String> sort(String label, String comparator) {
         List<String> list1 = new ArrayList<>();
@@ -87,9 +90,10 @@ public class DataFrameAPI implements DataFrame, Iterable<Map<String, Object>>{
         return list1;
     }
 
-    /*public List<Map<String, Object>> query(String condition) {
 
-    }*/
+    public List<Map<String, Object>> query(Predicate<Map<String, Object>> predicate) {
+        return list.stream().filter(predicate).collect(Collectors.toList());
+    }
 
     /**
      * This function checks for all the items that have the same value (double) in the corresponding
@@ -99,13 +103,8 @@ public class DataFrameAPI implements DataFrame, Iterable<Map<String, Object>>{
      * @param value The value the condition has to fulfill
      * @return Returns a list with the items that contain the same value in the corresponding label
      */
-    public List<Map<String, Object>> equals(String key, double value) {
-        List<Map<String, Object>> list1 = new ArrayList<>();
-        for (var map : list) {
-            if (map.get(key).equals(value))
-                list1.add(map);
-        }
-        return list1;
+    public Predicate<Map<String, Object>> equals(String key, double value) {
+        return p -> p.get(key).equals(value);
     }
 
     /**
@@ -116,14 +115,10 @@ public class DataFrameAPI implements DataFrame, Iterable<Map<String, Object>>{
      * @param value The value the condition has to fulfill
      * @return Returns a list with the items that contain the same value in the corresponding label
      */
-    public List<Map<String, Object>> equals(String key, String value) {
-        List<Map<String, Object>> list1 = new ArrayList<>();
-        for (var map : list) {
-            if (map.get(key).equals(value))
-                list1.add(map);
-        }
-        return list1;
+    public Predicate<Map<String, Object>> equals(String key, String value) {
+        return p -> p.get(key).equals(value);
     }
+
 
     /**
      * This function checks for all the items that have a greater value in the corresponding
@@ -133,13 +128,8 @@ public class DataFrameAPI implements DataFrame, Iterable<Map<String, Object>>{
      * @param value The value the condition has to fulfill
      * @return Returns a list with the items that contain a greater value in the corresponding label
      */
-    public List<Map<String, Object>> greater(String key, double value) {
-        List<Map<String, Object>> list1 = new ArrayList<>();
-        for (var map : list) {
-            if ((Double) map.get(key) > value)
-                list1.add(map);
-        }
-        return list1;
+    public Predicate<Map<String, Object>> greater(String key, double value) {
+        return p -> (Double) p.get(key) > (value);
     }
 
     /**
@@ -150,15 +140,9 @@ public class DataFrameAPI implements DataFrame, Iterable<Map<String, Object>>{
      * @param value The value the condition has to fulfill
      * @return Returns a list with the items that contain a lower value in the corresponding label
      */
-    public List<Map<String, Object>> lower(String key, double value) {
-        List<Map<String, Object>> list1 = new ArrayList<>();
-        for (var map : list) {
-            if ((Double) map.get(key) < value)
-                list1.add(map);
-        }
-        return list1;
+    public Predicate<Map<String, Object>> lower(String key, double value) {
+        return p -> (Double) p.get(key) < (value);
     }
-
 
     @Override
     public Iterator<Map<String, Object>> iterator() {

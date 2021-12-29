@@ -28,10 +28,10 @@ public class DataFrameAPITest {
         System.out.println(df.columns());
         System.out.println(df.size());
         System.out.println(df.sort("City", descending));
-        System.out.println(df.equals("City", "Wilmington"));
-        System.out.println(df.equals("LatD",49.0));
-        System.out.println(df.greater("LatD",45.0));
-        System.out.println(df.lower("LatD",45.0));
+        System.out.println(df.query(df.equals("City", "Wilmington")));
+        System.out.println(df.query(df.equals("LatD", 49.0)));
+        System.out.println(df.query(df.greater("LatD",45.0)));
+        System.out.println(df.query(df.lower("LatD",45.0)));
 
         for (Map<String, Object> stringObjectMap : df) {
             System.out.println(i + " - " + stringObjectMap);
@@ -45,10 +45,10 @@ public class DataFrameAPITest {
         System.out.println(df2.columns());
         System.out.println(df2.size());
         System.out.println(df2.sort("LatD", descending));
-        System.out.println(df2.equals("City", "Wilmington"));
-        System.out.println(df2.equals("LatD",50.0));
-        System.out.println(df2.greater("LatD",49.0));
-        System.out.println(df2.lower("LatD",45.0));
+        System.out.println(df2.query(df2.equals("City", "Wilmington")));
+        System.out.println(df2.query(df2.equals("LatD", 49.0)));
+        System.out.println(df2.query(df2.greater("LatD",49.0)));
+        System.out.println(df2.query(df2.lower("LatD",45.0)));
 
         Iterator<Map<String, Object>> it2 = df2.iterator();
         i = 0;
@@ -64,10 +64,10 @@ public class DataFrameAPITest {
         System.out.println(df3.columns());
         System.out.println(df3.size());
         System.out.println(df3.sort("LatD", ascending));
-        System.out.println(df3.equals("City", "Regina"));
-        System.out.println(df3.equals("LatD",50.0));
-        System.out.println(df3.greater("LatD",49.0));
-        System.out.println(df3.lower("LatD",45.0));
+        System.out.println(df3.query(df3.equals("City", "Regina")));
+        System.out.println(df3.query(df3.equals("LatD",50.0)));
+        System.out.println(df3.query(df3.greater("LatD",49.0)));
+        System.out.println(df3.query(df3.lower("LatD",45.0)));
 
         Iterator<Map<String, Object>> it3 = df3.iterator();
         i = 0;
