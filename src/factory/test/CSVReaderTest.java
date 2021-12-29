@@ -32,7 +32,7 @@ public class CSVReaderTest {
         list.add(map);
         System.out.println("Testing CSVReader...");
         AbstractReader csvReader = factory.createReader();
-        Assertions.assertEquals(list,csvReader.createReader(".\\src\\citiesTest.csv"));
+        Assertions.assertEquals(list,csvReader.createReader(".\\src\\api\\APIFiles\\citiesTest.csv"));
     }
 
 }

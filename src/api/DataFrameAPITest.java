@@ -33,8 +33,8 @@ public class DataFrameAPITest {
         System.out.println(df.query(df.greater("LatD",45.0)));
         System.out.println(df.query(df.lower("LatD",45.0)));
 
-        for (Map<String, Object> stringObjectMap : df) {
-            System.out.println(i + " - " + stringObjectMap);
+        for (Map<String, Object> map : df) {
+            System.out.println(i + " - " + map);
             i++;
         }
 
@@ -50,10 +50,9 @@ public class DataFrameAPITest {
         System.out.println(df2.query(df2.greater("LatD",49.0)));
         System.out.println(df2.query(df2.lower("LatD",45.0)));
 
-        Iterator<Map<String, Object>> it2 = df2.iterator();
         i = 0;
-        while (it2.hasNext()){
-            System.out.println(i + " - " +it2.next());
+        for (Map<String, Object> map : df2) {
+            System.out.println(i + " - " + map);
             i++;
         }
 
@@ -69,10 +68,9 @@ public class DataFrameAPITest {
         System.out.println(df3.query(df3.greater("LatD",49.0)));
         System.out.println(df3.query(df3.lower("LatD",45.0)));
 
-        Iterator<Map<String, Object>> it3 = df3.iterator();
         i = 0;
-        while (it3.hasNext()){
-            System.out.println(i + " - " +it3.next());
+        for (Map<String, Object> map : df3) {
+            System.out.println(i + " - " + map);
             i++;
         }
 

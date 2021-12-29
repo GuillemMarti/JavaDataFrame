@@ -26,6 +26,9 @@ public class DataFrameAPI implements DataFrame, Iterable<Map<String, Object>> {
         this.list = list;
     }
 
+    /**
+     * @return The list
+     */
     public List<Map<String, Object>> getList() {
         return list;
     }
@@ -90,30 +93,35 @@ public class DataFrameAPI implements DataFrame, Iterable<Map<String, Object>> {
         return list1;
     }
 
-
+    /**
+     * This function returns a list according to the condition we request
+     *
+     * @param predicate The condition we want to search in the DataFrame
+     * @return The list with the keys and values according to the requested condition
+     */
     public List<Map<String, Object>> query(Predicate<Map<String, Object>> predicate) {
         return list.stream().filter(predicate).collect(Collectors.toList());
     }
 
     /**
-     * This function checks for all the items that have the same value (double) in the corresponding
+     * This function checks the item that have the same value (double) in the corresponding
      * label passed by parameter
      *
      * @param key   The label we want to check
      * @param value The value the condition has to fulfill
-     * @return Returns a list with the items that contain the same value in the corresponding label
+     * @return Returns a map if the item contains the same value in the corresponding label
      */
     public Predicate<Map<String, Object>> equals(String key, double value) {
         return p -> p.get(key).equals(value);
     }
 
     /**
-     * This function checks for all the items that have the same value (string) in the corresponding
+     * This function checks the item that have the same value (string) in the corresponding
      * label passed by parameter
      *
      * @param key   The label we want to check
      * @param value The value the condition has to fulfill
-     * @return Returns a list with the items that contain the same value in the corresponding label
+     * @return Returns a map if the item contains the same value in the corresponding label
      */
     public Predicate<Map<String, Object>> equals(String key, String value) {
         return p -> p.get(key).equals(value);
@@ -121,29 +129,32 @@ public class DataFrameAPI implements DataFrame, Iterable<Map<String, Object>> {
 
 
     /**
-     * This function checks for all the items that have a greater value in the corresponding
+     * This function checks the item that have a greater value in the corresponding
      * label passed by parameter
      *
      * @param key   The label we want to check
      * @param value The value the condition has to fulfill
-     * @return Returns a list with the items that contain a greater value in the corresponding label
+     * @return Returns a map if the item contains a greater value in the corresponding label
      */
     public Predicate<Map<String, Object>> greater(String key, double value) {
         return p -> (Double) p.get(key) > (value);
     }
 
     /**
-     * This function checks for all the items that have a greater value in the corresponding
+     * This function checks the item that have a greater value in the corresponding
      * label passed by parameter
      *
      * @param key   The label we want to check
      * @param value The value the condition has to fulfill
-     * @return Returns a list with the items that contain a lower value in the corresponding label
+     * @return Returns the map if the item contains a lower value in the corresponding label
      */
     public Predicate<Map<String, Object>> lower(String key, double value) {
         return p -> (Double) p.get(key) < (value);
     }
 
+    /**
+     * @return Returns an iterator over elements of type Map<String,Object>>
+     */
     @Override
     public Iterator<Map<String, Object>> iterator() {
         return this.list.iterator();

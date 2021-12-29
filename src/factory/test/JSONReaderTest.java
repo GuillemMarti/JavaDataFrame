@@ -29,7 +29,7 @@ public class JSONReaderTest {
         list.add(map);
         System.out.println("Testing JSONReader...");
         AbstractReader jsonReader = factory.createReader();
-        Assertions.assertEquals(list,jsonReader.createReader(".\\src\\citiesTest.json"));
+        Assertions.assertEquals(list,jsonReader.createReader(".\\src\\api\\APIFiles\\citiesTest.json"));
     }
 
 }

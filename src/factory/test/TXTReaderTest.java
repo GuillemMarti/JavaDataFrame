@@ -32,7 +32,7 @@ public class TXTReaderTest {
         list.add(map);
         System.out.println("Testing TXTReader...");
         AbstractReader txtReader = factory.createReader();
-        Assertions.assertEquals(list,txtReader.createReader(".\\src\\citiesTest.txt"));
+        Assertions.assertEquals(list,txtReader.createReader(".\\src\\api\\APIFiles\\citiesTest.txt"));
     }
 
 }
