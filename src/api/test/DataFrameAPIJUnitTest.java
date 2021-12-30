@@ -1,5 +1,6 @@
-package api;
+package api.test;
 
+import api.DataFrameAPI;
 import factory.AbstractFactory;
 import factory.AbstractReader;
 import factory.JSONFactory;
@@ -29,24 +30,31 @@ public class DataFrameAPIJUnitTest {
     public void testAt() {
         System.out.println("\n\nTesting At...");
         Assertions.assertEquals(list.get(0).get("LatD").toString().trim(),df.at(0, "LatD"));
+        System.out.println(list.get(0).get("LatD").toString().trim()+" | "+df.at(0, "LatD"));
     }
 
     @Test
     public void testIat() {
         System.out.println("\n\nTesting Iat...");
         Assertions.assertEquals(list.get(0).get("LatD").toString().trim(),df.iat(0, 0));
+        System.out.println(list.get(0).get("LatD").toString().trim()+" | "+df.iat(0, 0));
+
     }
 
     @Test
     public void testColumns() {
         System.out.println("\n\nTesting Columns...");
         Assertions.assertEquals(list.get(0).size(),df.columns());
+        System.out.println(list.get(0).size()+" | "+df.columns());
+
     }
 
     @Test
     public void testSize() {
         System.out.println("\n\nTesting Size...");
         Assertions.assertEquals(list.size(),df.size());
+        System.out.println(list.size()+" | "+df.size());
+
     }
 
     @Test
@@ -60,10 +68,12 @@ public class DataFrameAPIJUnitTest {
 
         System.out.println("\n\nTesting Sort...");
         Assertions.assertEquals(list1,df.sort("LatD", descending));
+        System.out.println(list1+" | "+df.sort("LatD", descending));
+
 
         list1.sort(Comparator.naturalOrder());
         Assertions.assertEquals(list1,df.sort("LatD", ascending));
-
+        System.out.println(list1+" | "+df.sort("LatD", ascending));
     }
 
     @Test
@@ -92,8 +102,15 @@ public class DataFrameAPIJUnitTest {
 
         System.out.println("\n\nTesting Query...");
         Assertions.assertEquals(list1,df.query(df.equals("City", "Wilmington")));
+        System.out.println(list1+" | "+df.query(df.equals("City", "Wilmington")));
+
         Assertions.assertEquals(list2,df.query(df.equals("LatD", 49.0)));
+        System.out.println(list2+" | "+df.query(df.equals("LatD", 49.0)));
+
         Assertions.assertEquals(list3,df.query(df.greater("LatD", 49.0)));
+        System.out.println(list3+" | "+df.query(df.greater("LatD", 49.0)));
+
         Assertions.assertEquals(list4,df.query(df.lower("LatD", 45.0)));
+        System.out.println(list4+" | "+df.query(df.lower("LatD", 45.0)));
     }
 }
