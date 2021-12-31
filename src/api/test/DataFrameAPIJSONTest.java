@@ -13,7 +13,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
-public class DataFrameAPIJUnitTest {
+public class DataFrameAPIJSONTest {
 
     AbstractFactory factoryJSON = new JSONFactory();
     AbstractReader jsonReader = factoryJSON.createReader();

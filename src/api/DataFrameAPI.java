@@ -11,13 +11,6 @@ public class DataFrameAPI implements DataFrame, Iterable<Map<String, Object>> {
     List<Map<String, Object>> list;
 
     /**
-     * DataFrame empty constructor
-     */
-    public DataFrameAPI() {
-        this.list = new ArrayList<>();
-    }
-
-    /**
      * Dataframe constructor
      *
      * @param list List of maps containing the data information
