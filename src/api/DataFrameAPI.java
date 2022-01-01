@@ -1,6 +1,7 @@
 package api;
 
 import dataframe.DataFrame;
+import visitor.DataframeVisitor;
 
 import java.util.*;
 import java.util.function.Predicate;
@@ -151,6 +152,10 @@ public class DataFrameAPI implements DataFrame, Iterable<Map<String, Object>> {
     @Override
     public Iterator<Map<String, Object>> iterator() {
         return this.list.iterator();
+    }
+
+    public void accept(DataframeVisitor visitor, String label){
+        visitor.visit(this, label);
     }
 }
 

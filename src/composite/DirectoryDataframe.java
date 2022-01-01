@@ -1,6 +1,7 @@
 package composite;
 
 import dataframe.DataFrame;
+import visitor.DataframeVisitor;
 
 import java.util.*;
 import java.util.function.Predicate;
@@ -23,6 +24,10 @@ public class DirectoryDataframe implements DataFrame {
 
     public void removeChild(DataFrame child) {
         children.remove(child);
+    }
+
+    public List<DataFrame> getChildren() {
+        return children;
     }
 
     @Override
@@ -193,4 +198,7 @@ public class DirectoryDataframe implements DataFrame {
         return p -> (Double) p.get(key) < (value);
     }
 
+    public void accept(DataframeVisitor visitor, String label){
+        visitor.visit(this, label);
+    }
 }

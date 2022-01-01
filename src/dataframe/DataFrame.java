@@ -1,5 +1,7 @@
 package dataframe;
 
+import visitor.DataframeVisitor;
+
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
@@ -17,5 +19,6 @@ public interface DataFrame {
     Predicate<Map<String, Object>> equals(String key, String value);
     Predicate<Map<String, Object>> greater(String key, double value);
     Predicate<Map<String, Object>> lower(String key, double value);
+    void accept(DataframeVisitor visitor, String label);
 
 }

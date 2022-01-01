@@ -1,5 +1,5 @@
 "LatD", "LatM", "LatS", "NS", "LonD", "LonM", "LonS", "EW", "City", "State"
    42,   87,   68, "N",     8,   54,    34, "W", "Santiago de Compostela", GAL
    43,   35,   20, "N",     8,   41,   33, "W", "La Coruña", GAL
-   43,   1,   35, "N",    7,   55,   80, "W", "Lugo", GAL
+   43,    1,   35, "N",    7,   55,   80, "W", "Lugo", GAL
    42,   33,   24, "N",     7,   86,    31, "W", "Ourense", GAL
