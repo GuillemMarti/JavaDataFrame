@@ -2,26 +2,19 @@ package composite.test;
 
 import api.DataFrameAPI;
 import composite.DirectoryDataframe;
-import factory.*;
 
 import java.io.IOException;
 
 public class CompositeTest {
 
     public static void main(String[] args) throws IOException {
-        AbstractFactory factoryCSV = new CSVFactory();
-        AbstractFactory factoryJSON = new JSONFactory();
-        AbstractFactory factoryTXT = new TXTFactory();
-        AbstractReader csvReader = factoryCSV.createReader();
-        AbstractReader jsonReader = factoryJSON.createReader();
-        AbstractReader txtReader = factoryTXT.createReader();
         DirectoryDataframe directoryDataframeEU = new DirectoryDataframe(".\\src\\composite\\EU");
         DirectoryDataframe directoryDataframeNA = new DirectoryDataframe(".\\src\\composite\\NA");
         DirectoryDataframe directoryDataframeSpain = new DirectoryDataframe(".\\src\\composite\\EU\\Spain");
-        DataFrameAPI canadaDataframe = new DataFrameAPI(txtReader.createReader(".\\src\\composite\\NA\\Canada.txt"));
-        DataFrameAPI cataloniaDataframe = new DataFrameAPI(csvReader.createReader(".\\src\\composite\\EU\\Spain\\Catalonia.csv"));
-        DataFrameAPI galiciaDataframe = new DataFrameAPI(csvReader.createReader(".\\src\\composite\\EU\\Spain\\Galicia.csv"));
-        DataFrameAPI germanyDataframe = new DataFrameAPI(jsonReader.createReader(".\\src\\composite\\EU\\Germany.json"));
+        DataFrameAPI canadaDataframe = new DataFrameAPI(".\\src\\composite\\NA\\Canada.txt","txt");
+        DataFrameAPI cataloniaDataframe = new DataFrameAPI(".\\src\\composite\\EU\\Spain\\Catalonia.csv","csv");
+        DataFrameAPI galiciaDataframe = new DataFrameAPI(".\\src\\composite\\EU\\Spain\\Galicia.csv","csv");
+        DataFrameAPI germanyDataframe = new DataFrameAPI(".\\src\\composite\\EU\\Germany.json","json");
         String ascending = "ascending", descending = "descending";
 
 

@@ -1,7 +1,6 @@
 package api.test;
 
 import api.DataFrameAPI;
-import factory.*;
 
 import java.io.IOException;
 import java.util.Map;
@@ -9,15 +8,9 @@ import java.util.Map;
 public class DataFrameAPITest {
 
     public static void main(String[] args) throws IOException {
-        AbstractFactory factoryCSV = new CSVFactory();
-        AbstractFactory factoryJSON = new JSONFactory();
-        AbstractFactory factoryTXT = new TXTFactory();
-        AbstractReader csvReader = factoryCSV.createReader();
-        AbstractReader jsonReader = factoryJSON.createReader();
-        AbstractReader txtReader = factoryTXT.createReader();
-        DataFrameAPI df = new DataFrameAPI(csvReader.createReader(".\\src\\api\\APIFiles\\cities.csv"));
-        DataFrameAPI df2 = new DataFrameAPI(jsonReader.createReader(".\\src\\api\\APIFiles\\cities.json"));
-        DataFrameAPI df3 = new DataFrameAPI(txtReader.createReader(".\\src\\api\\APIFiles\\cities.txt"));
+        DataFrameAPI df = new DataFrameAPI(".\\src\\api\\APIFiles\\cities.csv","csv");
+        DataFrameAPI df2 = new DataFrameAPI(".\\src\\api\\APIFiles\\cities.json","json");
+        DataFrameAPI df3 = new DataFrameAPI(".\\src\\api\\APIFiles\\cities.txt","txt");
         String ascending = "ascending", descending = "descending";
         int i = 0;
 

@@ -26,9 +26,9 @@ public class CompositeJUnitTest {
     List<Map<String, Object>> list,listAux,listAux2;
 
     { try {
-        df1 = new DataFrameAPI(csvReader.createReader(".\\src\\composite\\EU\\Spain\\Catalonia.csv"));
-        df2 = new DataFrameAPI(csvReader.createReader(".\\src\\composite\\EU\\Spain\\Galicia.csv"));
-        df3 = new DataFrameAPI(jsonReader.createReader(".\\src\\composite\\EU\\Germany.json"));
+        df1 = new DataFrameAPI(".\\src\\composite\\EU\\Spain\\Catalonia.csv","csv");
+        df2 = new DataFrameAPI(".\\src\\composite\\EU\\Spain\\Galicia.csv","csv");
+        df3 = new DataFrameAPI(".\\src\\composite\\EU\\Germany.json","json");
         directoryDataframe1 = new DirectoryDataframe(".\\src\\composite\\EU");
         directoryDataframe2 = new DirectoryDataframe(".\\src\\composite\\EU\\Spain");
         list = new ArrayList<>(jsonReader.createReader(".\\src\\composite\\EU\\Germany.json"));

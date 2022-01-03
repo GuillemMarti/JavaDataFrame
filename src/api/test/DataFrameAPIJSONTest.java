@@ -21,7 +21,7 @@ public class DataFrameAPIJSONTest {
     List<Map<String, Object>> list;
 
     { try {
-            df = new DataFrameAPI(jsonReader.createReader(".\\src\\api\\APIFiles\\cities.json"));
+            df = new DataFrameAPI(".\\src\\api\\APIFiles\\cities.json","json");
             list = new ArrayList<>(jsonReader.createReader(".\\src\\api\\APIFiles\\cities.json"));
         } catch (IOException e) { e.printStackTrace(); }
     }

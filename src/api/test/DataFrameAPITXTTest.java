@@ -21,7 +21,7 @@ public class DataFrameAPITXTTest {
     List<Map<String, Object>> list;
 
     { try {
-        df = new DataFrameAPI(txtReader.createReader(".\\src\\api\\APIFiles\\cities.txt"));
+        df = new DataFrameAPI(".\\src\\api\\APIFiles\\cities.txt","txt");
         list = new ArrayList<>(txtReader.createReader(".\\src\\api\\APIFiles\\cities.txt"));
     } catch (IOException e) { e.printStackTrace(); }
     }

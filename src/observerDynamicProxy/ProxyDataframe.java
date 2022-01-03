@@ -1,47 +1,67 @@
-package composite;
+package observerDynamicProxy;
 
 import dataframe.DataFrame;
+import factory.*;
 import visitor.DataframeVisitor;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class DirectoryDataframe implements DataFrame {
+public class ProxyDataframe implements DataFrame {
 
-    String directoryName;
-    List<DataFrame> children;
+    private final String filename;
+    private final String fileType;
+    List<Map<String, Object>> list;
+    List<Observer> observers;
 
-    public DirectoryDataframe(String directoryName) {
-        this.directoryName = directoryName;
-        children = new LinkedList<>();
+    public ProxyDataframe(String filepath, String fileType) {
+        this.filename = filepath;
+        this.fileType = fileType;
+        observers = new LinkedList<>();
     }
 
-    public void addChild(DataFrame child) {
-        children.add(child);
+    public void getProxy() throws IOException {
+        if (list == null){
+            switch (fileType) {
+                case "csv" -> {
+                    AbstractFactory factoryCSV = new CSVFactory();
+                    AbstractReader csvReader = factoryCSV.createReader();
+                    this.list = csvReader.createReader(filename);
+                }
+                case "json" -> {
+                    AbstractFactory factoryJSON = new JSONFactory();
+                    AbstractReader jsonReader = factoryJSON.createReader();
+                    this.list = jsonReader.createReader(filename);
+                }
+                case "txt" -> {
+                    AbstractFactory factoryTXT = new TXTFactory();
+                    AbstractReader txtReader = factoryTXT.createReader();
+                    this.list = txtReader.createReader(filename);
+                }
+            }
+        }else {
+            System.out.println("Proxy Dataframe already loaded");
+        }
+    }
+    public void attach(Observer observer){
+        observers.add(observer);
     }
 
-    public void removeChild(DataFrame child) {
-        children.remove(child);
-    }
-
-    public List<DataFrame> getChildren() {
-        return children;
+    public void notifyAllObservers(String[] args){
+        for(Observer observer:observers){
+            observer.update(args);
+        }
     }
 
     @Override
     public List<Map<String, Object>> getList() {
-        List<Map<String, Object>> list = new LinkedList<>();
-        for (DataFrame child : children) {
-            list.addAll(child.getList());
-        }
         return list;
     }
 
-
     /**
-     * Returns the value of a single item and column label, gets all the lists
-     * of the files in the directory before searching
+     * Returns the value of a single item and column label
      *
      * @param row   The item from the list
      * @param label The element we want the value
@@ -49,21 +69,14 @@ public class DirectoryDataframe implements DataFrame {
      */
     @Override
     public String at(int row, String label) {
-        Map<String, Object> map;
-        List<Map<String, Object>> list1 = new LinkedList<>();
-        for (DataFrame child : children) {
-            list1.addAll(child.getList());
-        }
-        map = list1.get(row);
-        if (map.get(label) != null) {
-            return map.get(label).toString().trim();
-        }
-        return null;
+        Map<String, Object> map = list.get(row);
+        String[] args = {"at", String.valueOf(row), label};
+        notifyAllObservers(args);
+        return (map.get(label).toString().trim());
     }
 
     /**
-     * Access a single value for a row and column by integer position, gets all the lists
-     * of the files in the directory before searching
+     * Access a single value for a row and column by integer position
      *
      * @param row    The index from the list to access
      * @param column The number of column to access
@@ -71,17 +84,11 @@ public class DirectoryDataframe implements DataFrame {
      */
     @Override
     public String iat(int row, int column) {
-        Map<String, Object> map;
-        List<Map<String, Object>> list1 = new LinkedList<>();
-        for (DataFrame child : children) {
-            list1.addAll(child.getList());
-        }
-        map = list1.get(row);
+        Map<String, Object> map = list.get(row);
         String key = map.keySet().toArray()[column].toString();
-        if (map.get(key) != null) {
-            return map.get(key).toString().trim();
-        }
-        return null;
+        String[] args = {"iat", String.valueOf(row), String.valueOf(column)};
+        notifyAllObservers(args);
+        return (map.get(key).toString().trim());
     }
 
     /**
@@ -89,23 +96,20 @@ public class DirectoryDataframe implements DataFrame {
      */
     @Override
     public int columns() {
-        int columns = 0;
-        for (DataFrame child : children) {
-            columns = columns + child.columns();
-        }
-        return columns / children.size();
+        Map<String, Object> map = list.get(0);
+        String[] args = {"columns"};
+        notifyAllObservers(args);
+        return map.size();
     }
 
     /**
-     * @return The number of items all the lists in the directory
+     * @return The number of items in the list
      */
     @Override
     public int size() {
-        int size = 0;
-        for (DataFrame child : children) {
-            size = size + child.size();
-        }
-        return size;
+        String[] args = {"size"};
+        notifyAllObservers(args);
+        return list.size();
     }
 
     /**
@@ -118,16 +122,12 @@ public class DirectoryDataframe implements DataFrame {
     @Override
     public List<String> sort(String label, String comparator) {
         List<String> list1 = new ArrayList<>();
-        List<Map<String, Object>> childList;
-
-        for (DataFrame child : children) {
-            childList = child.getList();
-            for (var map : childList) {
-                list1.add(map.get(label).toString().trim());
-            }
+        String[] args = {"sort",label,comparator};
+        notifyAllObservers(args);
+        for (var map : list) {
+            list1.add(map.get(label).toString().trim());
         }
-
-        switch (comparator) {
+        switch (comparator.toLowerCase()) {
             case "ascending" -> list1.sort(Comparator.naturalOrder());
             case "descending" -> list1.sort(Comparator.reverseOrder());
         }
@@ -143,10 +143,7 @@ public class DirectoryDataframe implements DataFrame {
      */
     @Override
     public List<Map<String, Object>> query(Predicate<Map<String, Object>> predicate) {
-        List<Map<String, Object>> list = new LinkedList<>();
-        for (DataFrame child : children) {
-            list.addAll(child.getList());
-        }
+
         return list.stream().filter(predicate).collect(Collectors.toList());
     }
 
@@ -158,7 +155,10 @@ public class DirectoryDataframe implements DataFrame {
      * @param value The value the condition has to fulfill
      * @return Returns a map if the item contains the same value in the corresponding label
      */
+    @Override
     public Predicate<Map<String, Object>> equals(String key, double value) {
+        String[] args = {"equals", key,String.valueOf(value)};
+        notifyAllObservers(args);
         return p -> p.get(key).equals(value);
     }
 
@@ -170,7 +170,10 @@ public class DirectoryDataframe implements DataFrame {
      * @param value The value the condition has to fulfill
      * @return Returns a map if the item contains the same value in the corresponding label
      */
+    @Override
     public Predicate<Map<String, Object>> equals(String key, String value) {
+        String[] args = {"equals", key, value};
+        notifyAllObservers(args);
         return p -> p.get(key).equals(value);
     }
 
@@ -182,7 +185,10 @@ public class DirectoryDataframe implements DataFrame {
      * @param value The value the condition has to fulfill
      * @return Returns a map if the item contains a greater value in the corresponding label
      */
+    @Override
     public Predicate<Map<String, Object>> greater(String key, double value) {
+        String[] args = {"greater", key, String.valueOf(value)};
+        notifyAllObservers(args);
         return p -> (Double) p.get(key) > (value);
     }
 
@@ -194,11 +200,14 @@ public class DirectoryDataframe implements DataFrame {
      * @param value The value the condition has to fulfill
      * @return Returns the map if the item contains a lower value in the corresponding label
      */
+    @Override
     public Predicate<Map<String, Object>> lower(String key, double value) {
+        String[] args = {"lower", key,String.valueOf(value)};
+        notifyAllObservers(args);
         return p -> (Double) p.get(key) < (value);
     }
 
-    public void accept(DataframeVisitor visitor, String label){
-        visitor.visit(this, label);
+    @Override
+    public void accept(DataframeVisitor visitor, String label) {
     }
 }

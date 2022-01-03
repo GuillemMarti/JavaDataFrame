@@ -21,7 +21,7 @@ public class DataFrameAPICSVTest {
     List<Map<String, Object>> list;
 
     { try {
-        df = new DataFrameAPI(csvReader.createReader(".\\src\\api\\APIFiles\\cities.csv"));
+        df = new DataFrameAPI(".\\src\\api\\APIFiles\\cities.csv","csv");
         list = new ArrayList<>(csvReader.createReader(".\\src\\api\\APIFiles\\cities.csv"));
     } catch (IOException e) { e.printStackTrace(); }
     }

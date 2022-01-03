@@ -1,8 +1,10 @@
 package api;
 
 import dataframe.DataFrame;
+import factory.*;
 import visitor.DataframeVisitor;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -14,10 +16,28 @@ public class DataFrameAPI implements DataFrame, Iterable<Map<String, Object>> {
     /**
      * Dataframe constructor
      *
-     * @param list List of maps containing the data information
+     * @param filepath The path to the file we want the data
+     * @param fileType The type of file we want to process
+     * @throws IOException Signals if an I/O exception has occurred
      */
-    public DataFrameAPI(List<Map<String, Object>> list) {
-        this.list = list;
+    public DataFrameAPI(String filepath, String fileType) throws IOException {
+        switch (fileType) {
+            case "csv" -> {
+                AbstractFactory factoryCSV = new CSVFactory();
+                AbstractReader csvReader = factoryCSV.createReader();
+                this.list = csvReader.createReader(filepath);
+            }
+            case "json" -> {
+                AbstractFactory factoryJSON = new JSONFactory();
+                AbstractReader jsonReader = factoryJSON.createReader();
+                this.list = jsonReader.createReader(filepath);
+            }
+            case "txt" -> {
+                AbstractFactory factoryTXT = new TXTFactory();
+                AbstractReader txtReader = factoryTXT.createReader();
+                this.list = txtReader.createReader(filepath);
+            }
+        }
     }
 
     /**
