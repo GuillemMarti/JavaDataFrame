@@ -1,57 +1,48 @@
 package observerDynamicProxy;
 
-import dataframe.DataFrame;
 import factory.*;
 import visitor.DataframeVisitor;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class ProxyDataframe implements DataFrame {
+public class ProxyDataframe implements DataframeProxy {
 
-    private final String filename;
-    private final String fileType;
     List<Map<String, Object>> list;
     List<Observer> observers;
 
-    public ProxyDataframe(String filepath, String fileType) {
-        this.filename = filepath;
-        this.fileType = fileType;
+    public ProxyDataframe(String filepath, String fileType) throws IOException {
         observers = new LinkedList<>();
-    }
-
-    public void getProxy() throws IOException {
-        if (list == null){
-            switch (fileType) {
-                case "csv" -> {
-                    AbstractFactory factoryCSV = new CSVFactory();
-                    AbstractReader csvReader = factoryCSV.createReader();
-                    this.list = csvReader.createReader(filename);
-                }
-                case "json" -> {
-                    AbstractFactory factoryJSON = new JSONFactory();
-                    AbstractReader jsonReader = factoryJSON.createReader();
-                    this.list = jsonReader.createReader(filename);
-                }
-                case "txt" -> {
-                    AbstractFactory factoryTXT = new TXTFactory();
-                    AbstractReader txtReader = factoryTXT.createReader();
-                    this.list = txtReader.createReader(filename);
-                }
+        switch (fileType) {
+            case "csv" -> {
+                AbstractFactory factoryCSV = new CSVFactory();
+                AbstractReader csvReader = factoryCSV.createReader();
+                this.list = csvReader.createReader(filepath);
             }
-        }else {
-            System.out.println("Proxy Dataframe already loaded");
+            case "json" -> {
+                AbstractFactory factoryJSON = new JSONFactory();
+                AbstractReader jsonReader = factoryJSON.createReader();
+                this.list = jsonReader.createReader(filepath);
+            }
+            case "txt" -> {
+                AbstractFactory factoryTXT = new TXTFactory();
+                AbstractReader txtReader = factoryTXT.createReader();
+                this.list = txtReader.createReader(filepath);
+            }
         }
     }
+
+
     public void attach(Observer observer){
         observers.add(observer);
     }
 
-    public void notifyAllObservers(String[] args){
+    public void notifyAllObservers(Method method){
         for(Observer observer:observers){
-            observer.update(args);
+            observer.update(method);
         }
     }
 
@@ -70,8 +61,11 @@ public class ProxyDataframe implements DataFrame {
     @Override
     public String at(int row, String label) {
         Map<String, Object> map = list.get(row);
-        String[] args = {"at", String.valueOf(row), label};
-        notifyAllObservers(args);
+        try {
+            notifyAllObservers(getClass().getMethod("at", int.class, String.class));
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
         return (map.get(label).toString().trim());
     }
 
@@ -86,8 +80,11 @@ public class ProxyDataframe implements DataFrame {
     public String iat(int row, int column) {
         Map<String, Object> map = list.get(row);
         String key = map.keySet().toArray()[column].toString();
-        String[] args = {"iat", String.valueOf(row), String.valueOf(column)};
-        notifyAllObservers(args);
+        try {
+            notifyAllObservers(getClass().getMethod("iat", int.class, int.class));
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
         return (map.get(key).toString().trim());
     }
 
@@ -95,10 +92,13 @@ public class ProxyDataframe implements DataFrame {
      * @return The number of labels in the list
      */
     @Override
-    public int columns() {
+    public int columns()  {
         Map<String, Object> map = list.get(0);
-        String[] args = {"columns"};
-        notifyAllObservers(args);
+        try {
+            notifyAllObservers(getClass().getMethod("columns"));
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
         return map.size();
     }
 
@@ -107,8 +107,11 @@ public class ProxyDataframe implements DataFrame {
      */
     @Override
     public int size() {
-        String[] args = {"size"};
-        notifyAllObservers(args);
+        try {
+            notifyAllObservers(getClass().getMethod("size"));
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
         return list.size();
     }
 
@@ -122,8 +125,11 @@ public class ProxyDataframe implements DataFrame {
     @Override
     public List<String> sort(String label, String comparator) {
         List<String> list1 = new ArrayList<>();
-        String[] args = {"sort",label,comparator};
-        notifyAllObservers(args);
+        try {
+            notifyAllObservers(getClass().getMethod("sort", String.class, String.class));
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
         for (var map : list) {
             list1.add(map.get(label).toString().trim());
         }
@@ -156,9 +162,12 @@ public class ProxyDataframe implements DataFrame {
      * @return Returns a map if the item contains the same value in the corresponding label
      */
     @Override
-    public Predicate<Map<String, Object>> equals(String key, double value) {
-        String[] args = {"equals", key,String.valueOf(value)};
-        notifyAllObservers(args);
+    public Predicate<Map<String, Object>> equals(String key, double value)  {
+        try {
+            notifyAllObservers(getClass().getMethod("equals", String.class, double.class));
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
         return p -> p.get(key).equals(value);
     }
 
@@ -172,8 +181,11 @@ public class ProxyDataframe implements DataFrame {
      */
     @Override
     public Predicate<Map<String, Object>> equals(String key, String value) {
-        String[] args = {"equals", key, value};
-        notifyAllObservers(args);
+        try {
+            notifyAllObservers(getClass().getMethod("equals", String.class, String.class));
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
         return p -> p.get(key).equals(value);
     }
 
@@ -187,8 +199,11 @@ public class ProxyDataframe implements DataFrame {
      */
     @Override
     public Predicate<Map<String, Object>> greater(String key, double value) {
-        String[] args = {"greater", key, String.valueOf(value)};
-        notifyAllObservers(args);
+        try {
+            notifyAllObservers(getClass().getMethod("greater", String.class, double.class));
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
         return p -> (Double) p.get(key) > (value);
     }
 
@@ -202,8 +217,11 @@ public class ProxyDataframe implements DataFrame {
      */
     @Override
     public Predicate<Map<String, Object>> lower(String key, double value) {
-        String[] args = {"lower", key,String.valueOf(value)};
-        notifyAllObservers(args);
+        try {
+            notifyAllObservers(getClass().getMethod("lower", String.class, double.class));
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
         return p -> (Double) p.get(key) < (value);
     }
 

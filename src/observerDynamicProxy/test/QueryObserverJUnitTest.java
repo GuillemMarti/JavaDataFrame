@@ -14,9 +14,13 @@ public class QueryObserverJUnitTest {
     QueryObserver queryObserver = new QueryObserver();
 
     {
-        proxyDataframe = new ProxyDataframe(".\\src\\composite\\EU\\Spain\\Catalonia.csv","csv");
-        proxyDataframe2 = new ProxyDataframe(".\\src\\composite\\EU\\Germany.json","json");
-        proxyDataframe3 = new ProxyDataframe(".\\src\\composite\\NA\\Canada.txt","txt");
+        try{
+            proxyDataframe = new ProxyDataframe(".\\src\\composite\\EU\\Spain\\Catalonia.csv","csv");
+            proxyDataframe2 = new ProxyDataframe(".\\src\\composite\\EU\\Germany.json","json");
+            proxyDataframe3 = new ProxyDataframe(".\\src\\composite\\NA\\Canada.txt","txt");
+        }catch (IOException e){
+            e.printStackTrace();
+        }
         proxyDataframe.attach(logObserver);
         proxyDataframe2.attach(logObserver);
         proxyDataframe3.attach(logObserver);
@@ -27,37 +31,34 @@ public class QueryObserverJUnitTest {
     }
 
     @Test
-    public void testUpdate() throws IOException {
-        proxyDataframe.getProxy();
-        proxyDataframe2.getProxy();
-        proxyDataframe3.getProxy();
+    public void testUpdate() {
         System.out.println("Testing QueryObserver...");
-        System.out.println("\nExpected LogObserver result: at - 2 - City");
+        System.out.println("\nExpected a LogObserver log of at operation");
         System.out.println("Expected QueryObserver result: none");
         proxyDataframe.at(2,"City");
-        System.out.println("\nExpected LogObserver result: iat - 3 - 4");
+        System.out.println("\nExpected a LogObserver log of iat operation");
         System.out.println("Expected QueryObserver result: none");
         proxyDataframe.iat(3,4);
-        System.out.println("\nExpected LogObserver result: columns");
+        System.out.println("\nExpected a LogObserver log of columns operation");
         System.out.println("Expected QueryObserver result: none");
         proxyDataframe2.columns();
-        System.out.println("\nExpected LogObserver result: size");
+        System.out.println("\nExpected a LogObserver log of size operation");
         System.out.println("Expected QueryObserver result: none");
         proxyDataframe2.size();
-        System.out.println("\nExpected LogObserver result: sort - City - ascending");
+        System.out.println("\nExpected a LogObserver log of sort operation");
         System.out.println("Expected QueryObserver result: none");
         proxyDataframe3.sort("City", "ascending");
-        System.out.println("\nExpected LogObserver result: greater - LatD - 49.0");
-        System.out.println("Expected QueryObserver result: greater - LatD - 49.0");
+        System.out.println("\nExpected a LogObserver log of query greater operation");
+        System.out.println("Expected a QueryObserver log of query greater operation");
         proxyDataframe3.query(proxyDataframe3.greater("LatD",49));
-        System.out.println("\nExpected LogObserver result: equals - City - Vancouver");
-        System.out.println("Expected QueryObserver result: equals - City - Vancouver");
+        System.out.println("\nExpected a LogObserver log of query equals operation");
+        System.out.println("Expected a QueryObserver log of query equals operation");
         proxyDataframe3.query(proxyDataframe3.equals("City","Vancouver"));
-        System.out.println("\nExpected LogObserver result: equals - LatD - 49.0");
-        System.out.println("Expected QueryObserver result: equals - LatD - 49.0");
+        System.out.println("\nExpected a LogObserver log of query equals operation");
+        System.out.println("Expected a QueryObserver log of query equals operation");
         proxyDataframe3.query(proxyDataframe3.equals("LatD",49));
-        System.out.println("\nExpected LogObserver result: lower - LatS - 80.0");
-        System.out.println("Expected QueryObserver result: lower - LatS - 80.0");
+        System.out.println("\nExpected a LogObserver log of query lower operation");
+        System.out.println("Expected a QueryObserver log of query lower operation");
         proxyDataframe3.query(proxyDataframe3.lower("LatS", 80));
     }
 }
