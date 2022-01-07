@@ -22,14 +22,6 @@ public interface DataFrame {
 
     List<Map<String, Object>> query(Predicate<Map<String, Object>> predicate);
 
-    Predicate<Map<String, Object>> equals(String key, double value);
-
-    Predicate<Map<String, Object>> equals(String key, String value);
-
-    Predicate<Map<String, Object>> greater(String key, double value);
-
-    Predicate<Map<String, Object>> lower(String key, double value);
-
-    void accept(DataframeVisitor visitor, String label);
+    void accept(DataframeVisitor visitor);
 
 }

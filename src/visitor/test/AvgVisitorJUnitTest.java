@@ -24,7 +24,7 @@ public class AvgVisitorJUnitTest {
     DataFrameAPI df1, df2, df3;
     DirectoryDataframe directoryDataframe1, directoryDataframe2;
     List<Map<String, Object>> list, listAux, listAux2;
-    AvgVisitor avgVisitor = new AvgVisitor();
+    AvgVisitor avgVisitor = new AvgVisitor("LatD");
 
     {
         try {
@@ -51,12 +51,12 @@ public class AvgVisitorJUnitTest {
     public void testVisit() {
         double avg = 50.75;
         System.out.println("Testing AvgVisitor on single Dataframe...");
-        df3.accept(avgVisitor, "LatD");
+        df3.accept(avgVisitor);
         Assertions.assertEquals(avg, avgVisitor.getStatus());
         System.out.println(avg + " | " + avgVisitor.getStatus());
         System.out.println("\nTesting AvgVisitor on directory Dataframe...");
         avg = 44.75;
-        directoryDataframe1.accept(avgVisitor, "LatD");
+        directoryDataframe1.accept(avgVisitor);
         Assertions.assertEquals(avg, avgVisitor.getStatus());
         System.out.println(avg + " | " + avgVisitor.getStatus());
     }

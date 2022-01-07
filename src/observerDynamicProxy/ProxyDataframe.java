@@ -149,83 +149,15 @@ public class ProxyDataframe implements DataframeProxy {
      */
     @Override
     public List<Map<String, Object>> query(Predicate<Map<String, Object>> predicate) {
-
+        try {
+            notifyAllObservers(getClass().getMethod("query", Predicate.class));
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
         return list.stream().filter(predicate).collect(Collectors.toList());
     }
 
-    /**
-     * This function checks the item that have the same value (double) in the corresponding
-     * label passed by parameter
-     *
-     * @param key   The label we want to check
-     * @param value The value the condition has to fulfill
-     * @return Returns a map if the item contains the same value in the corresponding label
-     */
     @Override
-    public Predicate<Map<String, Object>> equals(String key, double value)  {
-        try {
-            notifyAllObservers(getClass().getMethod("equals", String.class, double.class));
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-        return p -> p.get(key).equals(value);
-    }
-
-    /**
-     * This function checks the item that have the same value (string) in the corresponding
-     * label passed by parameter
-     *
-     * @param key   The label we want to check
-     * @param value The value the condition has to fulfill
-     * @return Returns a map if the item contains the same value in the corresponding label
-     */
-    @Override
-    public Predicate<Map<String, Object>> equals(String key, String value) {
-        try {
-            notifyAllObservers(getClass().getMethod("equals", String.class, String.class));
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-        return p -> p.get(key).equals(value);
-    }
-
-    /**
-     * This function checks the item that have a greater value in the corresponding
-     * label passed by parameter
-     *
-     * @param key   The label we want to check
-     * @param value The value the condition has to fulfill
-     * @return Returns a map if the item contains a greater value in the corresponding label
-     */
-    @Override
-    public Predicate<Map<String, Object>> greater(String key, double value) {
-        try {
-            notifyAllObservers(getClass().getMethod("greater", String.class, double.class));
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-        return p -> (Double) p.get(key) > (value);
-    }
-
-    /**
-     * This function checks the item that have a greater value in the corresponding
-     * label passed by parameter
-     *
-     * @param key   The label we want to check
-     * @param value The value the condition has to fulfill
-     * @return Returns the map if the item contains a lower value in the corresponding label
-     */
-    @Override
-    public Predicate<Map<String, Object>> lower(String key, double value) {
-        try {
-            notifyAllObservers(getClass().getMethod("lower", String.class, double.class));
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        }
-        return p -> (Double) p.get(key) < (value);
-    }
-
-    @Override
-    public void accept(DataframeVisitor visitor, String label) {
+    public void accept(DataframeVisitor visitor) {
     }
 }

@@ -12,23 +12,44 @@ public class DirectoryDataframe implements DataFrame {
     String directoryName;
     List<DataFrame> children;
 
+    /**
+     * DirectoryDataframe constructor
+     *
+     * @param directoryName The path to the directory
+     */
     public DirectoryDataframe(String directoryName) {
         this.directoryName = directoryName;
         children = new LinkedList<>();
     }
 
+    /**
+     * Adds a Dataframe to the list of dataframes in the directory
+     *
+     * @param child The file or directory to be added
+     */
     public void addChild(DataFrame child) {
         children.add(child);
     }
 
+    /**
+     * Removes a Dataframe to the list of dataframes in the directory
+     *
+     * @param child The file or directory to be removed
+     */
     public void removeChild(DataFrame child) {
         children.remove(child);
     }
 
+    /**
+     * @return The list of children contained in the dataframe
+     */
     public List<DataFrame> getChildren() {
         return children;
     }
 
+    /**
+     * @return The list of data contained in the dataframe
+     */
     @Override
     public List<Map<String, Object>> getList() {
         List<Map<String, Object>> list = new LinkedList<>();
@@ -117,16 +138,13 @@ public class DirectoryDataframe implements DataFrame {
      */
     @Override
     public List<String> sort(String label, String comparator) {
-        List<String> list1 = new ArrayList<>();
-        List<Map<String, Object>> childList;
+        List<String> list1;
+        List<Map<String, Object>> childList= new ArrayList<>();
 
         for (DataFrame child : children) {
-            childList = child.getList();
-            for (var map : childList) {
-                list1.add(map.get(label).toString().trim());
-            }
+            childList.addAll(child.getList());
         }
-
+        list1 = childList.stream().map(f->f.get(label).toString().trim()).collect(Collectors.toList());
         switch (comparator) {
             case "ascending" -> list1.sort(Comparator.naturalOrder());
             case "descending" -> list1.sort(Comparator.reverseOrder());
@@ -150,55 +168,7 @@ public class DirectoryDataframe implements DataFrame {
         return list.stream().filter(predicate).collect(Collectors.toList());
     }
 
-    /**
-     * This function checks the item that have the same value (double) in the corresponding
-     * label passed by parameter
-     *
-     * @param key   The label we want to check
-     * @param value The value the condition has to fulfill
-     * @return Returns a map if the item contains the same value in the corresponding label
-     */
-    public Predicate<Map<String, Object>> equals(String key, double value) {
-        return p -> p.get(key).equals(value);
-    }
-
-    /**
-     * This function checks the item that have the same value (string) in the corresponding
-     * label passed by parameter
-     *
-     * @param key   The label we want to check
-     * @param value The value the condition has to fulfill
-     * @return Returns a map if the item contains the same value in the corresponding label
-     */
-    public Predicate<Map<String, Object>> equals(String key, String value) {
-        return p -> p.get(key).equals(value);
-    }
-
-    /**
-     * This function checks the item that have a greater value in the corresponding
-     * label passed by parameter
-     *
-     * @param key   The label we want to check
-     * @param value The value the condition has to fulfill
-     * @return Returns a map if the item contains a greater value in the corresponding label
-     */
-    public Predicate<Map<String, Object>> greater(String key, double value) {
-        return p -> (Double) p.get(key) > (value);
-    }
-
-    /**
-     * This function checks the item that have a greater value in the corresponding
-     * label passed by parameter
-     *
-     * @param key   The label we want to check
-     * @param value The value the condition has to fulfill
-     * @return Returns the map if the item contains a lower value in the corresponding label
-     */
-    public Predicate<Map<String, Object>> lower(String key, double value) {
-        return p -> (Double) p.get(key) < (value);
-    }
-
-    public void accept(DataframeVisitor visitor, String label){
-        visitor.visit(this, label);
+    public void accept(DataframeVisitor visitor) {
+        visitor.visit(this);
     }
 }

@@ -24,7 +24,7 @@ public class SumVisitorJUnitTest {
     DataFrameAPI df1, df2, df3;
     DirectoryDataframe directoryDataframe1, directoryDataframe2;
     List<Map<String, Object>> list, listAux, listAux2;
-    SumVisitor sumVisitor = new SumVisitor();
+    SumVisitor sumVisitor = new SumVisitor("LatD");
 
     {
         try {
@@ -51,12 +51,12 @@ public class SumVisitorJUnitTest {
     public void testVisit() {
         double sum = 203;
         System.out.println("Testing SumVisitor on single Dataframe...");
-        df3.accept(sumVisitor, "LatD");
+        df3.accept(sumVisitor);
         Assertions.assertEquals(sum, sumVisitor.getStatus());
         System.out.println(sum + " | " + sumVisitor.getStatus());
         System.out.println("\nTesting SumVisitor on directory Dataframe...");
         sum = 537;
-        directoryDataframe1.accept(sumVisitor, "LatD");
+        directoryDataframe1.accept(sumVisitor);
         Assertions.assertEquals(sum, sumVisitor.getStatus());
         System.out.println(sum + " | " + sumVisitor.getStatus());
     }

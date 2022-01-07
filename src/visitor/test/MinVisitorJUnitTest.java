@@ -24,7 +24,7 @@ public class MinVisitorJUnitTest {
     DataFrameAPI df1, df2, df3;
     DirectoryDataframe directoryDataframe1, directoryDataframe2;
     List<Map<String, Object>> list, listAux, listAux2;
-    MinVisitor minVisitor = new MinVisitor();
+    MinVisitor minVisitor = new MinVisitor("LonD");
 
     {
         try {
@@ -50,11 +50,11 @@ public class MinVisitorJUnitTest {
     @Test
     public void testVisit() {
         System.out.println("Testing MinVisitor on single Dataframe...");
-        df2.accept(minVisitor, "LonD");
+        df2.accept(minVisitor);
         Assertions.assertEquals(listAux2.get(2), minVisitor.getStatus());
         System.out.println(listAux2.get(2).toString().trim() + " | " + minVisitor.getStatus().toString().trim());
         System.out.println("\nTesting MinVisitor on directory Dataframe...");
-        directoryDataframe1.accept(minVisitor, "LonD");
+        directoryDataframe1.accept(minVisitor);
         Assertions.assertEquals(list.get(6), minVisitor.getStatus());
         System.out.println(list.get(6).toString().trim() + " | " + minVisitor.getStatus().toString().trim());
     }

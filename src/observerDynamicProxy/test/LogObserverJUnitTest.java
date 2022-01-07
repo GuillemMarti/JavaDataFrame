@@ -48,6 +48,6 @@ public class LogObserverJUnitTest {
         System.out.println("\nExpected a LogObserver log of sort operation");
         proxyDataframe3.sort("City", "ascending");
         System.out.println("\nExpected a LogObserver log of query greater operation");
-        proxyDataframe3.query(proxyDataframe3.greater("LatD",49));
+        proxyDataframe3.query(f->(Double)f.get("LatD")>49.0);
     }
 }

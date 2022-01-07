@@ -88,7 +88,7 @@ public class DataFrameAPITXTTest {
                 list1.add(map);
         }
         for (var map : list) {
-            if (map.get("LatD").equals(50.0))
+            if (map.get("LatD").equals(48.0))
                 list2.add(map);
         }
         for (var map : list) {
@@ -101,16 +101,16 @@ public class DataFrameAPITXTTest {
         }
 
         System.out.println("\n\nTesting Query...");
-        Assertions.assertEquals(list1,df.query(df.equals("City", "Regina")));
-        System.out.println(list1+" | "+df.query(df.equals("City", "Regina")));
+        Assertions.assertEquals(list1,df.query(f->f.get("City").equals("Regina")));
+        System.out.println(list1+" | "+df.query(f->f.get("City").equals("Regina")));
 
-        Assertions.assertEquals(list2,df.query(df.equals("LatD", 50.0)));
-        System.out.println(list2+" | "+df.query(df.equals("LatD", 50.0)));
+        Assertions.assertEquals(list2,df.query(f->f.get("LatD").equals(48.0)));
+        System.out.println(list2+" | "+df.query(f->f.get("LatD").equals(48.0)));
 
-        Assertions.assertEquals(list3,df.query(df.greater("LatD", 49.0)));
-        System.out.println(list3+" | "+df.query(df.greater("LatD", 49.0)));
+        Assertions.assertEquals(list3,df.query(f->(Double)f.get("LatD")>(49.0)));
+        System.out.println(list3+" | "+df.query(f->(Double)f.get("LatD")>(49.0)));
 
-        Assertions.assertEquals(list4,df.query(df.lower("LatD", 45.0)));
-        System.out.println(list4+" | "+df.query(df.lower("LatD", 45.0)));
+        Assertions.assertEquals(list4,df.query(f->(Double)f.get("LatD")<(45.0)));
+        System.out.println(list4+" | "+df.query(f->(Double)f.get("LatD")<(45.0)));
     }
 }

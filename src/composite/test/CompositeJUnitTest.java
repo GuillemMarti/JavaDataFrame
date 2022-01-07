@@ -147,17 +147,17 @@ public class CompositeJUnitTest {
                 list4.add(map);
         }
 
-        Assertions.assertEquals(list1,directoryDataframe1.query(directoryDataframe1.equals("City", "Barcelona")));
-        System.out.println(list1+" | "+ directoryDataframe1.query(directoryDataframe1.equals("City", "Barcelona")));
+        Assertions.assertEquals(list1,directoryDataframe1.query(f->f.get("City").equals("Barcelona")));
+        System.out.println(list1+" | "+ directoryDataframe1.query(f->f.get("City").equals("Barcelona")));
 
-        Assertions.assertEquals(list2,directoryDataframe1.query(directoryDataframe1.equals("LatD", 43.0)));
-        System.out.println(list2+" | "+ directoryDataframe1.query(directoryDataframe1.equals("LatD", 43.0)));
+        Assertions.assertEquals(list2,directoryDataframe1.query(f->f.get("LatD").equals(43.0)));
+        System.out.println(list2+" | "+ directoryDataframe1.query(f->f.get("LatD").equals(43.0)));
 
-        Assertions.assertEquals(list3,directoryDataframe1.query(directoryDataframe1.greater("LatD", 49.0)));
-        System.out.println(list3+" | "+ directoryDataframe1.query(directoryDataframe1.greater("LatD", 49.0)));
+        Assertions.assertEquals(list3,directoryDataframe1.query(f->(Double)f.get("LatD")>49.0));
+        System.out.println(list3+" | "+ directoryDataframe1.query(f->(Double)f.get("LatD")>49.0));
 
-        Assertions.assertEquals(list4,directoryDataframe1.query(directoryDataframe1.lower("LatD", 45.0)));
-        System.out.println(list4+" | "+ directoryDataframe1.query(directoryDataframe1.lower("LatD", 45.0)));
+        Assertions.assertEquals(list4,directoryDataframe1.query(f->(Double)f.get("LatD")<45.0));
+        System.out.println(list4+" | "+ directoryDataframe1.query(f->(Double)f.get("LatD")<45.0));
 
 
         System.out.println("\nTesting subdirectory Query...");
@@ -185,16 +185,16 @@ public class CompositeJUnitTest {
                 list4.add(map);
         }
 
-        Assertions.assertEquals(list1,directoryDataframe2.query(directoryDataframe2.equals("City", "Barcelona")));
-        System.out.println(list1+" | "+ directoryDataframe2.query(directoryDataframe2.equals("City", "Barcelona")));
+        Assertions.assertEquals(list1,directoryDataframe2.query(f->f.get("City").equals("Barcelona")));
+        System.out.println(list1+" | "+ directoryDataframe2.query(f->f.get("City").equals("Barcelona")));
 
-        Assertions.assertEquals(list2,directoryDataframe2.query(directoryDataframe2.equals("LatD", 43.0)));
-        System.out.println(list2+" | "+ directoryDataframe2.query(directoryDataframe2.equals("LatD", 43.0)));
+        Assertions.assertEquals(list2,directoryDataframe2.query(f->f.get("LatD").equals(43.0)));
+        System.out.println(list2+" | "+ directoryDataframe2.query(f->f.get("LatD").equals(43.0)));
 
-        Assertions.assertEquals(list3,directoryDataframe2.query(directoryDataframe2.greater("LatD", 49.0)));
-        System.out.println(list3+" | "+ directoryDataframe2.query(directoryDataframe2.greater("LatD", 49.0)));
+        Assertions.assertEquals(list3,directoryDataframe2.query(f->(Double)f.get("LatD")>49.0));
+        System.out.println(list3+" | "+ directoryDataframe2.query(f->(Double)f.get("LatD")>49.0));
 
-        Assertions.assertEquals(list4,directoryDataframe2.query(directoryDataframe2.lower("LatD", 45.0)));
-        System.out.println(list4+" | "+ directoryDataframe2.query(directoryDataframe2.lower("LatD", 45.0)));
+        Assertions.assertEquals(list4,directoryDataframe2.query(f->(Double)f.get("LatD")<45.0));
+        System.out.println(list4+" | "+ directoryDataframe2.query(f->(Double)f.get("LatD")<45.0));
     }
 }

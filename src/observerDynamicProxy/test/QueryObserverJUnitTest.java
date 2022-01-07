@@ -1,23 +1,28 @@
 package observerDynamicProxy.test;
 
-import observerDynamicProxy.LogObserver;
-import observerDynamicProxy.ProxyDataframe;
-import observerDynamicProxy.QueryObserver;
+import observerDynamicProxy.*;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.lang.reflect.Proxy;
 
 public class QueryObserverJUnitTest {
 
-    ProxyDataframe proxyDataframe,proxyDataframe2,proxyDataframe3;
+    DataframeProxy proxyDataframe,proxyDataframe2,proxyDataframe3;
     LogObserver logObserver = new LogObserver();
     QueryObserver queryObserver = new QueryObserver();
 
     {
         try{
-            proxyDataframe = new ProxyDataframe(".\\src\\composite\\EU\\Spain\\Catalonia.csv","csv");
-            proxyDataframe2 = new ProxyDataframe(".\\src\\composite\\EU\\Germany.json","json");
-            proxyDataframe3 = new ProxyDataframe(".\\src\\composite\\NA\\Canada.txt","txt");
+            proxyDataframe = (DataframeProxy) Proxy.newProxyInstance(DataframeProxy.class.getClassLoader(),
+                    new Class<?>[] {DataframeProxy.class},
+                    new TestInvocationHandler(new ProxyDataframe(".\\src\\composite\\EU\\Spain\\Catalonia.csv","csv")));
+            proxyDataframe2 = (DataframeProxy) Proxy.newProxyInstance(DataframeProxy.class.getClassLoader(),
+                    new Class<?>[] {DataframeProxy.class},
+                    new TestInvocationHandler(new ProxyDataframe(".\\src\\composite\\EU\\Germany.json","json")));
+            proxyDataframe3 = (DataframeProxy) Proxy.newProxyInstance(DataframeProxy.class.getClassLoader(),
+                    new Class<?>[] {DataframeProxy.class},
+                    new TestInvocationHandler(new ProxyDataframe(".\\src\\composite\\NA\\Canada.txt","txt")));
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -50,15 +55,15 @@ public class QueryObserverJUnitTest {
         proxyDataframe3.sort("City", "ascending");
         System.out.println("\nExpected a LogObserver log of query greater operation");
         System.out.println("Expected a QueryObserver log of query greater operation");
-        proxyDataframe3.query(proxyDataframe3.greater("LatD",49));
+        proxyDataframe3.query(f->(Double)f.get("LatD")>49.0);
         System.out.println("\nExpected a LogObserver log of query equals operation");
         System.out.println("Expected a QueryObserver log of query equals operation");
-        proxyDataframe3.query(proxyDataframe3.equals("City","Vancouver"));
+        proxyDataframe3.query(f->f.get("City").equals("Vancouver"));
         System.out.println("\nExpected a LogObserver log of query equals operation");
         System.out.println("Expected a QueryObserver log of query equals operation");
-        proxyDataframe3.query(proxyDataframe3.equals("LatD",49));
+        proxyDataframe3.query(f->f.get("LatD").equals(49.0));
         System.out.println("\nExpected a LogObserver log of query lower operation");
         System.out.println("Expected a QueryObserver log of query lower operation");
-        proxyDataframe3.query(proxyDataframe3.lower("LatS", 80));
+        proxyDataframe3.query(f->(Double)f.get("LatS")<80.0);
     }
 }

@@ -24,7 +24,7 @@ public class MaxVisitorJUnitTest {
     DataFrameAPI df1, df2, df3;
     DirectoryDataframe directoryDataframe1, directoryDataframe2;
     List<Map<String, Object>> list, listAux, listAux2;
-    MaxVisitor maxVisitor = new MaxVisitor();
+    MaxVisitor maxVisitor = new MaxVisitor("LatM");
 
     {
         try {
@@ -50,11 +50,11 @@ public class MaxVisitorJUnitTest {
     @Test
     public void testVisit() {
         System.out.println("Testing MaxVisitor on single Dataframe...");
-        df1.accept(maxVisitor, "LatM");
+        df1.accept(maxVisitor);
         Assertions.assertEquals(listAux.get(3), maxVisitor.getStatus());
         System.out.println(listAux.get(3).toString().trim() + " | " + maxVisitor.getStatus().toString().trim());
         System.out.println("\nTesting MaxVisitor on directory Dataframe...");
-        directoryDataframe1.accept(maxVisitor, "LatM");
+        directoryDataframe1.accept(maxVisitor);
         Assertions.assertEquals(list.get(7), maxVisitor.getStatus());
         System.out.println(list.get(7).toString().trim() + " | " + maxVisitor.getStatus().toString().trim());
     }

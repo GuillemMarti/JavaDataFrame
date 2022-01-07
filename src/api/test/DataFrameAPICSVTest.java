@@ -101,17 +101,17 @@ public class DataFrameAPICSVTest {
         }
 
         System.out.println("\n\nTesting Query...");
-        Assertions.assertEquals(list1,df.query(df.equals("City", "Wilmington")));
-        System.out.println(list1+" | "+df.query(df.equals("City", "Wilmington")));
+        Assertions.assertEquals(list1,df.query(f->f.get("City").equals("Wilmington")));
+        System.out.println(list1+" | "+df.query(f->f.get("City").equals("Wilmington")));
 
-        Assertions.assertEquals(list2,df.query(df.equals("LatD", 49.0)));
-        System.out.println(list2+" | "+df.query(df.equals("LatD", 49.0)));
+        Assertions.assertEquals(list2,df.query(f->f.get("LatD").equals(49.0)));
+        System.out.println(list2+" | "+df.query(f->f.get("LatD").equals(49.0)));
 
-        Assertions.assertEquals(list3,df.query(df.greater("LatD", 45.0)));
-        System.out.println(list3+" | "+df.query(df.greater("LatD", 45.0)));
+        Assertions.assertEquals(list3,df.query(f->(Double)f.get("LatD")>(45.0)));
+        System.out.println(list3+" | "+df.query(f->(Double)f.get("LatD")>(45.0)));
 
-        Assertions.assertEquals(list4,df.query(df.lower("LatD", 45.0)));
-        System.out.println(list4+" | "+df.query(df.lower("LatD", 45.0)));
+        Assertions.assertEquals(list4,df.query(f->(Double)f.get("LatD")<(45.0)));
+        System.out.println(list4+" | "+df.query(f->(Double)f.get("LatD")<(45.0)));
     }
 }
 
