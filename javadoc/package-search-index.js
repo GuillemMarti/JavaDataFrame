@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"api"},{"l":"api.test"},{"l":"composite"},{"l":"composite.test"},{"l":"dataframe"},{"l":"factory"},{"l":"factory.test"},{"l":"observerDynamicProxy"},{"l":"observerDynamicProxy.test"},{"l":"visitor"},{"l":"visitor.test"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"mapreduce"}];updateSearchResults();

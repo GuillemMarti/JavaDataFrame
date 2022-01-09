@@ -1,11 +1,1 @@
-api
-api.test
-composite
-composite.test
-dataframe
-factory
-factory.test
-observerDynamicProxy
-observerDynamicProxy.test
-visitor
-visitor.test
+mapreduce
