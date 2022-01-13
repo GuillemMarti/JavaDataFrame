@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class MapReduceJUnitTest {
 
@@ -30,27 +31,29 @@ public class MapReduceJUnitTest {
 
     @Test
     public void testSumSizeList() {
-        double sum = 384.0;
+        String sum = "384";
         System.out.println("Testing SumSizeList...");
-        Assertions.assertEquals(sum, MapReduce.mapRed(list, f -> (double) f.size(), Double::sum));
-        System.out.println(sum + " | " + MapReduce.mapRed(list, f -> (double) f.size(), Double::sum));
+        String sum2 = MapReduce.mapRed(list, x -> x.getList().get(0).get("LatD").equals(48.0), f -> (double) f.size(), Double::sum);
+        Assertions.assertEquals(sum, sum2);
+        System.out.println(sum + " | " + MapReduce.mapRed(list, x -> x.getList().get(0).get("LatD").equals(48.0), f -> (double) f.size(), Double::sum));
     }
 
     @Test
     public void testMinValue() {
-        double min = 0.0;
+        String min = "0";
         System.out.println("Testing MinValue...");
-        Assertions.assertEquals(min, MapReduce.mapRed(list, f -> (double) f.size(), Double::min));
-        System.out.println(min + " | " + MapReduce.mapRed(list, f -> (double) f.size(), Double::min));
+        String min2 = MapReduce.mapRed(list, x -> x.getList().get(0).get("LatD").equals(48.0), f -> (double) f.size(), Double::min);
+        Assertions.assertEquals(min, min2);
+        System.out.println(min + " | " + min2);
 
     }
 
     @Test
     public void testMaxColumnsList() {
-        double max = 10.0;
+        String max = "10";
         System.out.println("Testing MaxColumnsList...");
-        Assertions.assertEquals(max, MapReduce.mapRed(list, f -> (double) f.columns(), Double::max));
-        System.out.println(max + " | " + MapReduce.mapRed(list, f -> (double) f.columns(), Double::max));
+        Assertions.assertEquals(max, MapReduce.mapRed(list, x -> x.getList().get(0).get("LatD").equals(48.0), f -> (double) f.columns(), Double::max));
+        System.out.println(max + " | " + MapReduce.mapRed(list,x -> x.getList().get(0).get("LatD").equals(48.0), f -> (double) f.columns(), Double::max));
 
     }
 
