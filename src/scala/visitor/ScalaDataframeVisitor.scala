@@ -1,8 +1,7 @@
 package scala.visitor
 
-import scala.composite.{ScalaDataframeAPI, ScalaDirectoryDataframe}
+import scala.dataframe.ScalaDataframe
 
 trait ScalaDataframeVisitor {
-  def visit(scalaDataframeAPI: ScalaDataframeAPI): Unit
-  def visit(scalaDataframeDirectory:ScalaDirectoryDataframe): Unit
+  def visit(scalaDataframe: ScalaDataframe): Unit
 }

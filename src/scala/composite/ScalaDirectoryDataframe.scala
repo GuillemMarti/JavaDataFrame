@@ -27,6 +27,15 @@ class ScalaDirectoryDataframe(directoryName: String) extends ScalaDataframe {
   }
 
   /**
+   * Retreives the list of children assigned to the directory
+   *
+   * @return The list of subdirectories
+   */
+  def getChildren: ListBuffer[ScalaDataframe] ={
+    children
+  }
+
+  /**
    * @return The list of data contained in the dataframe
    */
   override def getList: ListBuffer[Map[String, AnyRef]] = {

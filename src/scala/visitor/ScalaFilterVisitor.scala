@@ -2,26 +2,20 @@ package scala.visitor
 
 import scala.collection.mutable.ListBuffer
 import scala.composite.{ScalaDataframeAPI, ScalaDirectoryDataframe}
+import scala.dataframe.ScalaDataframe
 
-class ScalaFilterVisitor(label:String,value:Any, condition:Boolean) extends ScalaDataframeVisitor {
+class ScalaFilterVisitor(condition:Map[String, AnyRef] => Boolean) extends ScalaDataframeVisitor {
 
-  var list: ListBuffer[Map[String, AnyRef]] = _
+  private val list = ListBuffer[Map[String, AnyRef]]()
 
   def getStatus: ListBuffer[Map[String, AnyRef]] = {
+    println("Filtered elements:")
     list
   }
 
-  override def visit(scalaDataframeAPI: ScalaDataframeAPI): Unit = (condition) match {
-    case "greater" => scalaDataframeAPI.getList.foreach(f => if (f.get(label).asInstanceOf[Double]>value.asInstanceOf[Double]) list.addOne(f))
-    list = scalaDataframeAPI.getList
-    list.filter(condition)
-
-  }
-
-
-
-  override def visit(scalaDataframeDirectory: ScalaDirectoryDataframe): Unit = {
-
+  override def visit(scalaDataframe: ScalaDataframe): Unit = scalaDataframe match {
+    case a:ScalaDataframeAPI => list.appendAll(a.getList.filter(condition))
+    case b:ScalaDirectoryDataframe => b.getChildren.foreach(p=>p.accept(this))
   }
 
 }
