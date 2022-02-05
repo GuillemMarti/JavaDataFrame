@@ -43,6 +43,12 @@ class ScalaDataframeAPI(filePath:String) extends ScalaDataframe {
    */
   override def size: Int = list.size
 
+  def getColumn(label: String): ListBuffer[AnyRef] = {
+    val listAux = ListBuffer[AnyRef]()
+    list.foreach(e=>listAux.addOne(e(label)))
+    listAux
+  }
+
   override def accept(visitor:ScalaDataframeVisitor): Unit = {
     visitor.visit(this)
   }
