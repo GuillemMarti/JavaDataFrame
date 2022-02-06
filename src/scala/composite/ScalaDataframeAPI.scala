@@ -2,6 +2,7 @@ package scala.composite
 
 import factory.{AbstractFactory, AbstractReader, CSVFactory}
 
+import scala.annotation.tailrec
 import scala.collection.mutable.ListBuffer
 import scala.dataframe.ScalaDataframe
 import scala.jdk.CollectionConverters._
@@ -27,7 +28,7 @@ class ScalaDataframeAPI(filePath:String) extends ScalaDataframe {
    */
   override def at(row: Int, label: String): String = {
     val map = list(row)
-    map.get(label).toString
+    map(label).toString
   }
 
   /**
@@ -43,10 +44,20 @@ class ScalaDataframeAPI(filePath:String) extends ScalaDataframe {
    */
   override def size: Int = list.size
 
-  def getColumn(label: String): ListBuffer[AnyRef] = {
-    val listAux = ListBuffer[AnyRef]()
-    list.foreach(e=>listAux.addOne(e(label)))
-    listAux
+  def getColumn[A](label: String): List[A] = {
+    val listAux = ListBuffer[A]()
+    list.foreach(e=>listAux.addOne(e(label).asInstanceOf[A]))
+    listAux.toList
+  }
+
+  def listFilterMapStack[A](condition:A => Boolean,operation:A=>A,collection:List[A]): List[A] = collection match {
+    case Nil => Nil
+    case x :: xs => if (condition(x)) operation(x) :: listFilterMapStack(condition,operation,xs) else listFilterMapStack(condition,operation,xs)
+  }
+
+   def listFilterMapTail[A](condition:A => Boolean, operation:A=>A, collection:List[A], accum:List[A]): List[A] = collection match {
+    case Nil => accum
+    case x :: xs => if (condition(x)) listFilterMapTail(condition,operation,xs,accum.appended(operation(x))) else listFilterMapTail(condition,operation,xs,accum)
   }
 
   override def accept(visitor:ScalaDataframeVisitor): Unit = {

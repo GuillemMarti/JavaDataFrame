@@ -28,10 +28,10 @@ class ScalaDataframeUnitTest {
   @Test
   def testAt(): Unit = {
     println("\nTesting At...")
-    Assertions.assertEquals(list(25).get("LatD").toString.trim, df.at(25, "LatD"))
-    println(list(25).get("LatD").toString.trim + " | " + df.at(25, "LatD"))
-    Assertions.assertEquals(list(30).get("City").toString.trim, df.at(30, "City"))
-    println(list(30).get("City").toString.trim + " | " + df.at(30, "City"))
+    Assertions.assertEquals(list(25)("LatD").toString.trim, df.at(25, "LatD"))
+    println(list(25)("LatD").toString.trim + " | " + df.at(25, "LatD"))
+    Assertions.assertEquals(list(30)("City").toString.trim, df.at(30, "City"))
+    println(list(30)("City").toString.trim + " | " + df.at(30, "City"))
   }
 
   @Test

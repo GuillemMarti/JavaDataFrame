@@ -60,8 +60,8 @@ class ScalaDirectoryDataframe(directoryName: String) extends ScalaDataframe {
       list.addAll(child.getList)
     }
     val map = list(row)
-    if (map.get(label) != null)
-      return map.get(label).toString.trim
+    if (map(label) != null)
+      return map(label).toString.trim
     null
   }
 
