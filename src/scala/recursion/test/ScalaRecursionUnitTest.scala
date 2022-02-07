@@ -37,9 +37,9 @@ class ScalaRecursionUnitTest {
   def testListFilterDouble(): Unit ={
     val list = df.getColumn[Double]("LatD")
     println("Filtered:")
-    val list2 = df.listFilterMapStack[Double]((x:Double)=> x > 48.0,(y:Double)=> y+1000.0 ,list)
+    val list2 = df.listFilterMapStack[Double]((x:Double)=> x > 47.0,(y:Double)=> y.ceil ,list)
     list2.foreach(println)
-    val list3 = df.listFilterMapTail[Double]((x:Double)=> x > 48.0,(y:Double)=> y+1000.0 ,list,List())
+    val list3 = df.listFilterMapTail[Double]((x:Double)=> x > 47.0,(y:Double)=> y.floor ,list,List())
     println("Filtered:")
     list3.foreach(println)
   }
