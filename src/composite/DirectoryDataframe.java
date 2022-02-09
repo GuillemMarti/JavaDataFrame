@@ -137,7 +137,7 @@ public class DirectoryDataframe implements DataFrame {
      * @return The list with the values of the label following a certain order
      */
     @Override
-    public List<String> sort(String label, String comparator) {
+    public List<String> sort(String label, Comparator<String> comparator) {
         List<String> list1;
         List<Map<String, Object>> childList= new ArrayList<>();
 
@@ -145,11 +145,8 @@ public class DirectoryDataframe implements DataFrame {
             childList.addAll(child.getList());
         }
         list1 = childList.stream().map(f->f.get(label).toString().trim()).collect(Collectors.toList());
-        switch (comparator) {
-            case "ascending" -> list1.sort(Comparator.naturalOrder());
-            case "descending" -> list1.sort(Comparator.reverseOrder());
-        }
 
+        list1.sort(comparator);
         return list1;
     }
 

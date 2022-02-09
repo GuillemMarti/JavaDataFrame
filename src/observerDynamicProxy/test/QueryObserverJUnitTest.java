@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.lang.reflect.Proxy;
+import java.util.Comparator;
 
 public class QueryObserverJUnitTest {
 
@@ -52,7 +53,7 @@ public class QueryObserverJUnitTest {
         proxyDataframe2.size();
         System.out.println("\nExpected a LogObserver log of sort operation");
         System.out.println("Expected QueryObserver result: none");
-        proxyDataframe3.sort("City", "ascending");
+        proxyDataframe3.sort("City", Comparator.comparing(String::toString));
         System.out.println("\nExpected a LogObserver log of query greater operation");
         System.out.println("Expected a QueryObserver log of query greater operation");
         proxyDataframe3.query(f->(Double)f.get("LatD")>49.0);

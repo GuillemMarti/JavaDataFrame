@@ -94,13 +94,8 @@ public class DataFrameAPI implements DataFrame, Iterable<Map<String, Object>> {
      * @param comparator The condition for sort the list
      * @return The list with the values of the label following a certain order
      */
-    public List<String> sort(String label, String comparator) {
-        List<String> list1 = list.stream().map(f->f.get(label).toString().trim()).collect(Collectors.toList());
-        switch (comparator.toLowerCase()) {
-            case "ascending" -> list1.sort(Comparator.naturalOrder());
-            case "descending" -> list1.sort(Comparator.reverseOrder());
-        }
-        return list1;
+    public List<String> sort(String label, Comparator<String> comparator) {
+        return list.stream().map(f -> f.get(label).toString().trim()).sorted(comparator).collect(Collectors.toList());
     }
 
     /**

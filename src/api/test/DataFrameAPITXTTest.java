@@ -59,21 +59,20 @@ public class DataFrameAPITXTTest {
 
     @Test
     public void testSort() {
-        String ascending = "ascending", descending = "descending";
         List<String> list1 = new ArrayList<>();
         for (var map : list) {
             list1.add(map.get("LatD").toString().trim());
         }
-        list1.sort(Comparator.reverseOrder());
+        list1.sort(Comparator.naturalOrder());
 
         System.out.println("\n\nTesting Sort...");
-        Assertions.assertEquals(list1,df.sort("LatD", descending));
-        System.out.println(list1+" | "+df.sort("LatD", descending));
+        Assertions.assertEquals(list1,df.sort("LatD", Comparator.comparing(String::toString)));
+        System.out.println(list1+" | "+df.sort("LatD", Comparator.comparing(String::toString)));
 
 
-        list1.sort(Comparator.naturalOrder());
-        Assertions.assertEquals(list1,df.sort("LatD", ascending));
-        System.out.println(list1+" | "+df.sort("LatD", ascending));
+        list1.sort(Comparator.reverseOrder());
+        Assertions.assertEquals(list1,df.sort("LatD", Comparator.comparing(String::toString).reversed()));
+        System.out.println(list1+" | "+df.sort("LatD", Comparator.comparing(String::toString).reversed()));
     }
 
     @Test

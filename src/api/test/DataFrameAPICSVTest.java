@@ -59,21 +59,20 @@ public class DataFrameAPICSVTest {
 
     @Test
     public void testSort() {
-        String ascending = "ascending", descending = "descending";
         List<String> list1 = new ArrayList<>();
         for (var map : list) {
             list1.add(map.get("City").toString().trim());
         }
-        list1.sort(Comparator.reverseOrder());
+        list1.sort(Comparator.naturalOrder());
 
         System.out.println("\n\nTesting Sort...");
-        Assertions.assertEquals(list1,df.sort("City", descending));
-        System.out.println(list1+" | "+df.sort("City", descending));
+        Assertions.assertEquals(list1,df.sort("City", Comparator.comparing(String::toString)));
+        System.out.println(list1+" | "+df.sort("City", Comparator.comparing(String::toString)));
 
 
-        list1.sort(Comparator.naturalOrder());
-        Assertions.assertEquals(list1,df.sort("City", ascending));
-        System.out.println(list1+" | "+df.sort("City", ascending));
+        list1.sort(Comparator.reverseOrder());
+        Assertions.assertEquals(list1,df.sort("City", Comparator.comparing(String::toString).reversed()));
+        System.out.println(list1+" | "+df.sort("City", Comparator.comparing(String::toString).reversed()));
     }
 
     @Test

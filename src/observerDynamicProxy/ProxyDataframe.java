@@ -122,21 +122,17 @@ public class ProxyDataframe implements DataframeProxy {
      * @param comparator The condition for sort the list
      * @return The list with the values of the label following a certain order
      */
-    @Override
-    public List<String> sort(String label, String comparator) {
+    public List<String> sort(String label, Comparator<String> comparator) {
         List<String> list1 = new ArrayList<>();
         try {
-            notifyAllObservers(getClass().getMethod("sort", String.class, String.class));
+            notifyAllObservers(getClass().getMethod("sort", String.class, Comparator.class));
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
         for (var map : list) {
             list1.add(map.get(label).toString().trim());
         }
-        switch (comparator.toLowerCase()) {
-            case "ascending" -> list1.sort(Comparator.naturalOrder());
-            case "descending" -> list1.sort(Comparator.reverseOrder());
-        }
+       list1.sort(comparator);
 
         return list1;
     }

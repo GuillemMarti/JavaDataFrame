@@ -87,7 +87,6 @@ public class CompositeJUnitTest {
     public void testSort(){
         System.out.println("\nTesting directory Sort...");
 
-        String ascending = "ascending", descending = "descending";
         List<String> list1 = new ArrayList<>();
         List<String> list2 = new ArrayList<>();
 
@@ -96,12 +95,12 @@ public class CompositeJUnitTest {
         }
         list1.sort(Comparator.reverseOrder());
 
-        Assertions.assertEquals(list1,directoryDataframe1.sort("City", descending));
-        System.out.println(list1+" | "+ directoryDataframe1.sort("City", descending));
+        Assertions.assertEquals(list1,directoryDataframe1.sort("City", Comparator.comparing(String::toString).reversed()));
+        System.out.println(list1+" | "+ directoryDataframe1.sort("City", Comparator.comparing(String::toString).reversed()));
 
         list1.sort(Comparator.naturalOrder());
-        Assertions.assertEquals(list1,directoryDataframe1.sort("City", ascending));
-        System.out.println(list1+" | "+ directoryDataframe1.sort("City", ascending));
+        Assertions.assertEquals(list1,directoryDataframe1.sort("City", Comparator.comparing(String::toString)));
+        System.out.println(list1+" | "+ directoryDataframe1.sort("City", Comparator.comparing(String::toString)));
 
         System.out.println("\nTesting subdirectory Sort...");
         for (var map : listAux) {
@@ -110,14 +109,14 @@ public class CompositeJUnitTest {
         for (var map : listAux2) {
             list2.add(map.get("City").toString().trim());
         }
-        list2.sort(Comparator.reverseOrder());
-
-        Assertions.assertEquals(list2,directoryDataframe2.sort("City", descending));
-        System.out.println(list2+" | "+ directoryDataframe2.sort("City", descending));
-
         list2.sort(Comparator.naturalOrder());
-        Assertions.assertEquals(list2,directoryDataframe2.sort("City", ascending));
-        System.out.println(list2+" | "+ directoryDataframe2.sort("City", ascending));
+
+        Assertions.assertEquals(list2,directoryDataframe2.sort("City", Comparator.comparing(String::toString)));
+        System.out.println(list2+" | "+ directoryDataframe2.sort("City", Comparator.comparing(String::toString)));
+
+        list2.sort(Comparator.reverseOrder());
+        Assertions.assertEquals(list2,directoryDataframe2.sort("City", Comparator.comparing(String::toString).reversed()));
+        System.out.println(list2+" | "+ directoryDataframe2.sort("City", Comparator.comparing(String::toString).reversed()));
     }
 
     @Test
