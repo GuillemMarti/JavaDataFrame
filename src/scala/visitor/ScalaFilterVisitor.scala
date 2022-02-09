@@ -13,6 +13,12 @@ class ScalaFilterVisitor(condition:Map[String, AnyRef] => Boolean) extends Scala
     list
   }
 
+  /**
+   * Visits a dataframe and applies the filter to its data, in case of a directory dataframe
+   * makes a recursive call to its children.
+   *
+   * @param scalaDataframe The dataframe to visit
+   */
   override def visit(scalaDataframe: ScalaDataframe): Unit = scalaDataframe match {
     case a:ScalaDataframeAPI => list.appendAll(a.getList.filter(condition))
     case b:ScalaDirectoryDataframe => b.getChildren.foreach(p=>p.accept(this))
