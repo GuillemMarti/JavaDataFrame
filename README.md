@@ -18,4 +18,14 @@ Observer and Dynaminc proxy patterns implemented in observerDynamicproxy/ packag
 
 All packages contain a test/ folder with some JUnits testing the different functionalities.
 
+#Scala
+
+Added Scala package
+
+This package contains an adaptation of part of the Java Dataframe implementation.
+Contains a part of the Composite pattern from Java.
+Implements a new vistor with a couple new operations.
+It also implements a couple new operations using Stack and Tail recursion.
+
+
 
