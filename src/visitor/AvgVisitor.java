@@ -1,7 +1,5 @@
 package visitor;
 
-import api.DataFrameAPI;
-import composite.DirectoryDataframe;
 import dataframe.DataFrame;
 
 import java.util.List;
@@ -31,7 +29,7 @@ public class AvgVisitor implements DataframeVisitor {
      * @param d Dataframe with data
      */
     @Override
-    public void visit(DataFrameAPI d) {
+    public void visit(DataFrame d) {
         List<Map<String, Object>> list;
         list = d.getList();
         double sum = 0;
@@ -39,26 +37,6 @@ public class AvgVisitor implements DataframeVisitor {
         for (Map<String, Object> item : list) {
             sum += (Double) item.get(label);
             count++;
-        }
-        status = sum / count;
-    }
-
-    /**
-     * Gets the average value of the label passed found in the dataframe and in its subdirectories
-     *
-     * @param d DirectoryDataframe with data and other DataFrames
-     */
-    @Override
-    public void visit(DirectoryDataframe d) {
-        List<Map<String, Object>> list;
-        double sum = 0;
-        double count = 0;
-        for (DataFrame child : d.getChildren()) {
-            list = child.getList();
-            for (Map<String, Object> item : list) {
-                sum += (Double) item.get(label);
-                count++;
-            }
         }
         status = sum / count;
     }

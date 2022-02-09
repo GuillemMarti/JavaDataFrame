@@ -1,7 +1,5 @@
 package visitor;
 
-import api.DataFrameAPI;
-import composite.DirectoryDataframe;
 import dataframe.DataFrame;
 
 import java.util.HashMap;
@@ -31,7 +29,7 @@ public class MaxVisitor implements DataframeVisitor {
      * @param d Dataframe with data
      */
     @Override
-    public void visit(DataFrameAPI d) {
+    public void visit(DataFrame d) {
         List<Map<String, Object>> list;
         list = d.getList();
         Map<String, Object> maxItem = new HashMap<>();
@@ -45,25 +43,4 @@ public class MaxVisitor implements DataframeVisitor {
         status = maxItem;
     }
 
-    /**
-     * Gets the item with the maximum value of the label passed found in the dataframe or in its subdirectories
-     *
-     * @param d DirectoryDataframe with data and other DataFrames
-     */
-    @Override
-    public void visit(DirectoryDataframe d) {
-        List<Map<String, Object>> list;
-        Map<String, Object> maxItem = new HashMap<>();
-        double max = 0;
-        for (DataFrame child : d.getChildren()) {
-            list = child.getList();
-            for (Map<String, Object> item : list) {
-                if ((Double) item.get(label) > max) {
-                    maxItem = item;
-                    max = (Double) item.get(label);
-                }
-            }
-        }
-        status = maxItem;
-    }
 }

@@ -1,9 +1,7 @@
 package visitor;
 
-import api.DataFrameAPI;
-import composite.DirectoryDataframe;
+import dataframe.DataFrame;
 
 public interface DataframeVisitor {
-    void visit(DataFrameAPI d);
-    void visit(DirectoryDataframe d);
+    void visit(DataFrame d);
 }
