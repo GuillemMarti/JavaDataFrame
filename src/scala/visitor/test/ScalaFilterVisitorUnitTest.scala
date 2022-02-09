@@ -1,6 +1,5 @@
 package scala.visitor.test
 
-import composite.DirectoryDataframe
 import factory.{AbstractFactory, AbstractReader, CSVFactory}
 import org.junit.Test
 
@@ -18,8 +17,6 @@ class ScalaFilterVisitorUnitTest {
   var ddf: ScalaDirectoryDataframe = _
   var list: ListBuffer[Map[String, AnyRef]] = new ListBuffer[Map[String, AnyRef]]
   var v,v2,v3,v4: ScalaFilterVisitor = _
-
-
 
 
   {

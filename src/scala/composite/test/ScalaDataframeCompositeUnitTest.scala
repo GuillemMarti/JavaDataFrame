@@ -37,10 +37,10 @@ class ScalaDataframeCompositeUnitTest {
   @Test
   def testAt(): Unit = {
     println("\nTesting directory At...")
-    Assertions.assertEquals(list(2).get("LatS").toString.trim, directoryDataframe.at(2, "LatS"))
-    println(list(2).get("LatS").toString.trim + " | " + directoryDataframe.at(2, "LatS"))
-    Assertions.assertEquals(list2(2).get("City").toString.trim, directoryDataframe.at(6, "City"))
-    println(list2(2).get("City").toString.trim + " | " + directoryDataframe.at(6, "City"))
+    Assertions.assertEquals(list(2)("LatS").toString.trim, directoryDataframe.at(2, "LatS"))
+    println(list(2)("LatS").toString.trim + " | " + directoryDataframe.at(2, "LatS"))
+    Assertions.assertEquals(list2(2)("City").toString.trim, directoryDataframe.at(6, "City"))
+    println(list2(2)("City").toString.trim + " | " + directoryDataframe.at(6, "City"))
   }
 
   @Test

@@ -26,7 +26,32 @@ class ScalaRecursionUnitTest {
 
   @Test
   def testGetColumn(): Unit = {
-    val list = df.getColumn("LatD")
+    val list = df.getColumn[Double]("LatD")
     list.foreach(println)
+    println()
+    val list2 = df.getColumn[String]("City")
+    list2.foreach(println)
+  }
+
+  @Test
+  def testListFilterDouble(): Unit ={
+    val list = df.getColumn[Double]("LatD")
+    println("Filtered:")
+    val list2 = df.listFilterMapStack[Double]((x:Double)=> x > 47.0,(y:Double)=> y.ceil ,list)
+    list2.foreach(println)
+    val list3 = df.listFilterMapTail[Double]((x:Double)=> x > 47.0,(y:Double)=> y.floor ,list,List())
+    println("Filtered:")
+    list3.foreach(println)
+  }
+
+  @Test
+  def testListFilterString(): Unit ={
+    val list = df.getColumn[String]("City")
+    println("Filtered:")
+    val list2 = df.listFilterMapStack[String]((x:String)=> x.equals("Regina"),(y:String)=> y.concat("TOWN") ,list)
+    list2.foreach(println)
+    val list3 = df.listFilterMapTail[String]((x:String)=> x.equals("Watertown"),(y:String)=> y.concat("TOWN") ,list,List())
+    println("Filtered:")
+    list3.foreach(println)
   }
 }
